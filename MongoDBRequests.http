@@ -6,10 +6,10 @@ POST http://localhost:3000/api/v1/docs/gamecontroller/addGameToRepository
 content-type: application/json
 
 {
-  "user": "davidknight",
+  "user": "rinoa",
   "game": [
-    {"name": "FF8", "platform": "PS5"},
-    {"name": "FF7: Rebirth", "platform": "PS5"}
+    {"name": "FF16", "platform": "PS5"},
+    {"name": "Stellar Blade", "platform": "PS5"}
   ]
 }
 
@@ -22,4 +22,13 @@ content-type: application/json
   "gameToUpdate": "FF16",
   "keyToUpdate": "platform",
   "newValue": "PS5"
+}
+
+###
+POST http://localhost:3000/api/v1/docs/gamecontroller/addGameToCollection?user=rinoa
+content-type: application/json
+
+{
+  "name": "Cyberpunk 2077",
+  "platform": "PS5"
 }

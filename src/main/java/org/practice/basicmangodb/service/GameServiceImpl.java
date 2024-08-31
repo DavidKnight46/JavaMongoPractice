@@ -2,6 +2,7 @@ package org.practice.basicmangodb.service;
 
 import org.practice.basicmangodb.enums.Platforms;
 import org.practice.basicmangodb.exceptions.NoGamesFoundException;
+import org.practice.basicmangodb.exceptions.UnableToAddGameException;
 import org.practice.basicmangodb.models.game.Game;
 import org.practice.basicmangodb.models.game.GameDocument;
 import org.practice.basicmangodb.models.game.GameResponse;
@@ -9,7 +10,9 @@ import org.practice.basicmangodb.models.game.UpdateParameters;
 import org.practice.basicmangodb.repository.GameCollectionRepositoryI;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -41,6 +44,7 @@ public class GameServiceImpl implements GameServiceI {
 
     @Override
     public void updateGame(UpdateParameters updateParameters){
+
             if (gameCollectionRepositoryI.findById(updateParameters.id()).isPresent()) {
                 GameDocument gameDocument = gameCollectionRepositoryI.findById(updateParameters.id()).get();
 
@@ -54,6 +58,41 @@ public class GameServiceImpl implements GameServiceI {
 
                 gameCollectionRepositoryI.save(gameDocument);
             }
+
+
+    }
+
+    @Override
+    public void addGameToUserCollection(String user, Game newGame) {
+        if(gameCollectionRepositoryI.findAllByUser(user).isPresent()){
+            List<GameDocument> usersExistingGames = gameCollectionRepositoryI.findAllByUser(user).get();
+            GameDocument userDocument = usersExistingGames.stream().findFirst().orElseThrow();
+
+            List<Game> gameArrayList = new ArrayList<>(Arrays.stream(userDocument.getGame()).toList());
+            isSameGameOnSamePlatform(gameArrayList, newGame, user);
+
+            gameArrayList.add(newGame);
+
+            int numberOfCurrentGames = gameArrayList.size();
+            Game[] newGameArray = gameArrayList.toArray(new Game[numberOfCurrentGames]);
+
+            userDocument.setGame(newGameArray);
+
+            gameCollectionRepositoryI.save(userDocument);
+        } else {
+            throw new UnableToAddGameException(String.format("%s not present",
+                    newGame.getName()));
+        }
+    }
+
+    private void isSameGameOnSamePlatform(List<Game> list, Game newGame, String user){
+        if(list.stream().anyMatch(e -> e.getName().contentEquals(newGame.getName()) &&
+                e.getPlatform().contentEquals(newGame.getPlatform()))){
+           throw new UnableToAddGameException(String.format("%s on %s already found for user %s.",
+                   newGame.getName(),
+                   newGame.getPlatform(),
+                   user));
+        };
     }
 
     private GameResponse mapToGameResponse(GameDocument document){

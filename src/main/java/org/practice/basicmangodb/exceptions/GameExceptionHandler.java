@@ -27,4 +27,13 @@ public class GameExceptionHandler extends ResponseEntityExceptionHandler {
         return handleNoSuchElementException();
     }
 
+    @ExceptionHandler(UnableToAddGameException.class)
+    public ResponseEntity<Object> handleUnableToAddGameException(UnableToAddGameException e, WebRequest request){
+        return handleExceptionInternal(e,
+                e.getMessage(),
+                HttpHeaders.EMPTY,
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                request);
+    }
+
 }

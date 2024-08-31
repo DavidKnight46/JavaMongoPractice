@@ -1,6 +1,7 @@
 package org.practice.basicmangodb.controller;
 
 import org.practice.basicmangodb.enums.Platforms;
+import org.practice.basicmangodb.models.game.Game;
 import org.practice.basicmangodb.models.game.GameDocument;
 import org.practice.basicmangodb.models.game.GameResponse;
 import org.practice.basicmangodb.models.game.UpdateParameters;
@@ -38,5 +39,10 @@ public class GameController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateGame(@RequestBody UpdateParameters updateParameters){
         gameServiceI.updateGame(updateParameters);
+    }
+
+    @PostMapping("/addGameToCollection")
+    public void addGameToCollection(@RequestParam String user, @RequestBody Game newGame){
+        gameServiceI.addGameToUserCollection(user, newGame);
     }
 }
