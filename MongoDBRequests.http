@@ -25,7 +25,7 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:3000/api/v1/docs/gamecontroller/addGameToCollection?user=rinoa
+POST http://localhost:3000/api/v1/docs/gamecontroller/addGameToCollection?user=rinoa1
 content-type: application/json
 
 {

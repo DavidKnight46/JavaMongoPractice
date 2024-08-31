@@ -18,7 +18,7 @@ public class GameExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(e,
                 e.getMessage(),
                 HttpHeaders.EMPTY,
-                HttpStatus.INTERNAL_SERVER_ERROR,
+                HttpStatus.NOT_FOUND,
                 request);
     }
 
@@ -36,4 +36,12 @@ public class GameExceptionHandler extends ResponseEntityExceptionHandler {
                 request);
     }
 
+    @ExceptionHandler(NoUserFoundException.class)
+    public ResponseEntity<Object> handleNoUserFoundExceptionException(NoUserFoundException e, WebRequest request){
+        return handleExceptionInternal(e,
+                e.getMessage(),
+                HttpHeaders.EMPTY,
+                HttpStatus.NOT_FOUND,
+                request);
+    }
 }
