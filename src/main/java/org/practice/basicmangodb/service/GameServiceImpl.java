@@ -17,6 +17,9 @@ import java.util.List;
 @Service
 public class GameServiceImpl implements GameServiceI {
 
+    private static final String PLATFORM = "platform";
+    private static final String RATING = "rating";
+
     private final GameCollectionRepositoryI gameCollectionRepositoryI;
 
     public GameServiceImpl(GameCollectionRepositoryI gameCollectionRepositoryI){
@@ -24,7 +27,7 @@ public class GameServiceImpl implements GameServiceI {
     }
 
     @Override
-    public List<GameResponse> getFromMangoDB(String user, Platforms platform) {
+    public List<GameResponse> getUserGamesByPlatform(String user, Platforms platform) {
         isUsernamePresent(user);
 
         if(gameCollectionRepositoryI.findByPlatformAndUser(platform, user).orElseThrow().isEmpty()){
@@ -39,7 +42,7 @@ public class GameServiceImpl implements GameServiceI {
     }
 
     @Override
-    public void addToDB(GameDocument document) {
+    public void addGamesAndCreateUserCollection(GameDocument document) {
         gameCollectionRepositoryI.insert(document);
     }
 
@@ -53,7 +56,11 @@ public class GameServiceImpl implements GameServiceI {
                         .findFirst()
                         .orElseThrow();
 
-                game.setPlatform((String) updateParameters.newValue());
+                if(updateParameters.keyToUpdate().contentEquals(PLATFORM)) {
+                    game.setPlatform((String) updateParameters.newValue());
+                } else if (updateParameters.keyToUpdate().contentEquals(RATING)) {
+                    game.setRating((Double) updateParameters.newValue());
+                }
 
                 gameCollectionRepositoryI.save(gameDocument);
             }

@@ -9,7 +9,6 @@ import org.practice.basicmangodb.service.GameServiceI;
 import org.practice.basicmangodb.service.GameServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -24,15 +23,15 @@ public class GameController {
 
     @GetMapping("/getGameByUserAndPlatform")
     @ResponseStatus(HttpStatus.OK)
-    public List<GameResponse> getFromDB(@RequestParam String user,
-                                        @RequestParam Platforms platform){
-        return gameServiceI.getFromMangoDB(user, platform);
+    public List<GameResponse> getUserGamesByPlatform(@RequestParam String user,
+                                                     @RequestParam Platforms platform){
+        return gameServiceI.getUserGamesByPlatform(user, platform);
     }
 
-    @PostMapping("/addGameToRepository")
+    @PostMapping("/addGamesAndCreateUserCollection")
     @ResponseStatus(HttpStatus.CREATED)
-    public void postToMongo(@RequestBody GameDocument document){
-        gameServiceI.addToDB(document);
+    public void addGamesAndCreateUserCollection(@RequestBody GameDocument document){
+        gameServiceI.addGamesAndCreateUserCollection(document);
     }
 
     @PutMapping("/updateGame")
@@ -41,9 +40,9 @@ public class GameController {
         gameServiceI.updateGame(updateParameters);
     }
 
-    @PostMapping("/addGameToCollection")
-    public void addGameToCollection(@RequestParam String user,
-                                    @RequestBody Game newGame){
+    @PostMapping("/addGameToUserCollection")
+    public void addGameToUserCollection(@RequestParam String user,
+                                        @RequestBody Game newGame){
         gameServiceI.addGameToUserCollection(user, newGame);
     }
 }

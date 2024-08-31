@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface GameServiceI {
 
-    List<GameResponse> getFromMangoDB(String user, Platforms platform);
+    List<GameResponse> getUserGamesByPlatform(String user, Platforms platform);
 
-    void addToDB(GameDocument document);
+    void addGamesAndCreateUserCollection(GameDocument document);
 
     void updateGame(UpdateParameters updateParameters);
 

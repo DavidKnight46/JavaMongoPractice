@@ -1,8 +1,8 @@
 ### GET request to example server
 GET http://localhost:3000/api/v1/docs/gamecontroller/getGameByUserAndPlatform?user=rinoa&platform=PS5
 
-###
-POST http://localhost:3000/api/v1/docs/gamecontroller/addGameToRepository
+### Create new user with there initial collection
+POST http://localhost:3000/api/v1/docs/gamecontroller/addGamesToUserCollection
 content-type: application/json
 
 {
@@ -13,22 +13,44 @@ content-type: application/json
   ]
 }
 
-###
+### Change rating for a game
 PUT http://localhost:3000/api/v1/docs/gamecontroller/updateGame
 content-type: application/json
 
 {
-  "id": "66d127880108722e0fc2560a1",
+  "id": "66d2f1c89e8b280193705f6b",
+  "gameToUpdate": "FF16",
+  "keyToUpdate": "rating",
+  "newValue": 5.0
+}
+
+### Change platform for a game
+PUT http://localhost:3000/api/v1/docs/gamecontroller/updateGame
+content-type: application/json
+
+{
+  "id": "66d2f1c89e8b280193705f6b",
   "gameToUpdate": "FF16",
   "keyToUpdate": "platform",
   "newValue": "PS5"
 }
 
-###
+### Add an game to a users collection
+POST http://localhost:3000/api/v1/docs/gamecontroller/addGameToCollection?user=rinoa
+content-type: application/json
+
+{
+  "name": "Ratchet And Clank: Rift Apart",
+  "platform": "PS5",
+  "rating": 4.5
+}
+
+### Try to add an game to a invalid users collection
 POST http://localhost:3000/api/v1/docs/gamecontroller/addGameToCollection?user=rinoa1
 content-type: application/json
 
 {
-  "name": "Horizon: Forbidden West",
-  "platform": "PS5"
+  "name": "Ratchet And Clank: Rift Apart",
+  "platform": "PS5",
+  "rating": 4.5
 }
