@@ -1,0 +1,25 @@
+### GET request to example server
+GET http://localhost:3000/api/v1/docs/gamecontroller/getGameByUserAndPlatform?user=rinoa&platform=PS5
+
+###
+POST http://localhost:3000/api/v1/docs/gamecontroller/addGameToRepository
+content-type: application/json
+
+{
+  "user": "davidknight",
+  "game": [
+    {"name": "FF8", "platform": "PS5"},
+    {"name": "FF7: Rebirth", "platform": "PS5"}
+  ]
+}
+
+###
+PUT http://localhost:3000/api/v1/docs/gamecontroller/updateGame
+content-type: application/json
+
+{
+  "id": "66d127880108722e0fc2560a1",
+  "gameToUpdate": "FF16",
+  "keyToUpdate": "platform",
+  "newValue": "PS5"
+}
