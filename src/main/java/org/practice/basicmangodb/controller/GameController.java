@@ -42,7 +42,8 @@ public class GameController {
     }
 
     @PostMapping("/addGameToCollection")
-    public void addGameToCollection(@RequestParam String user, @RequestBody Game newGame){
+    public void addGameToCollection(@RequestParam String user,
+                                    @RequestBody Game newGame){
         gameServiceI.addGameToUserCollection(user, newGame);
     }
 }

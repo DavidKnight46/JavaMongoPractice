@@ -48,8 +48,7 @@ public class GameServiceImpl implements GameServiceI {
             if (gameCollectionRepositoryI.findById(updateParameters.id()).isPresent()) {
                 GameDocument gameDocument = gameCollectionRepositoryI.findById(updateParameters.id()).get();
 
-                Game game = Arrays
-                        .stream(gameDocument.getGame())
+                Game game = gameDocument.getGame().stream()
                         .filter(e -> e.getName().contentEquals(updateParameters.gameToUpdate()))
                         .findFirst()
                         .orElseThrow();
@@ -68,15 +67,12 @@ public class GameServiceImpl implements GameServiceI {
             List<GameDocument> usersExistingGames = gameCollectionRepositoryI.findAllByUser(user).get();
             GameDocument userDocument = usersExistingGames.stream().findFirst().orElseThrow();
 
-            List<Game> gameArrayList = new ArrayList<>(Arrays.stream(userDocument.getGame()).toList());
-            isSameGameOnSamePlatform(gameArrayList, newGame, user);
+            //ArrayList<Game> gameArrayList = userDocument.getGame();
+            isSameGameOnSamePlatform(userDocument.getGame(), newGame, user);
 
-            gameArrayList.add(newGame);
+            userDocument.getGame().add(newGame);
 
-            int numberOfCurrentGames = gameArrayList.size();
-            Game[] newGameArray = gameArrayList.toArray(new Game[numberOfCurrentGames]);
-
-            userDocument.setGame(newGameArray);
+            userDocument.setGame(userDocument.getGame());
 
             gameCollectionRepositoryI.save(userDocument);
         } else {
