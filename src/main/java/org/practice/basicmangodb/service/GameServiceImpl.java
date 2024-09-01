@@ -12,6 +12,8 @@ import org.practice.basicmangodb.models.game.UpdateParameters;
 import org.practice.basicmangodb.repository.GameCollectionRepositoryI;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 @Service
@@ -103,5 +105,15 @@ public class GameServiceImpl implements GameServiceI {
 
     private GameResponse mapToGameResponse(GameDocument document){
         return new GameResponse(document.getUser(), document.getGame());
+    }
+
+    private Period timeToRelease(LocalDate releaseDate){
+        val timeBetweenReleaseAndNow = Period.between(LocalDate.now(), releaseDate);
+
+        if(!timeBetweenReleaseAndNow.isNegative()){
+            return Period.between(LocalDate.now(), releaseDate);
+        } else {
+            return timeBetweenReleaseAndNow;
+        }
     }
 }

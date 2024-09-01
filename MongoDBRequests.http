@@ -46,11 +46,12 @@ content-type: application/json
 }
 
 ### Try to add an game to a invalid users collection
-POST http://localhost:3000/api/v1/docs/gamecontroller/addGameToCollection?user=rinoa1
+POST http://localhost:3000/api/v1/docs/gamecontroller/addGameToUserCollection?user=rinoa
 content-type: application/json
 
 {
-  "name": "Ratchet And Clank: Rift Apart",
+  "name": "Octopath II",
   "platform": "PS5",
-  "rating": 4.5
+  "rating": 5.0,
+  "releaseDate": "2023-02-24"
 }
