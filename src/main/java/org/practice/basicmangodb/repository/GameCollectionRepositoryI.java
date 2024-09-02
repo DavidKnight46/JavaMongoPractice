@@ -18,4 +18,7 @@ public interface GameCollectionRepositoryI extends MongoRepository<GameDocument,
     Optional<List<GameDocument>> findByPlatformAndUser(Platforms platform, String user);
 
     boolean existsByUser(String username);
+
+    @Query("{$and:[{ \"game.isPreOrder\": ?0 }, {user: ?1}]}")
+    List<GameDocument> findByIsPreOrder(Boolean isPreOrder, String user);
 }

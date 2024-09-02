@@ -37,13 +37,13 @@ public class GameController {
 
     @PutMapping("/updateGame")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void updateGame(@RequestBody UpdateParameters updateParameters){
+    public void updateGame(@RequestBody List<UpdateParameters> updateParameters){
         gameServiceI.updateGame(updateParameters);
     }
 
     @PostMapping("/addGameToUserCollection")
     public void addGameToUserCollection(@RequestParam String user,
-                                        @RequestBody Game newGame){
+                                        @RequestBody List<Game> newGame){
         gameServiceI.addGameToUserCollection(user, newGame);
     }
 }

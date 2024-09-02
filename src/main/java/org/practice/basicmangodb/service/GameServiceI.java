@@ -14,7 +14,7 @@ public interface GameServiceI {
 
     void addGamesAndCreateUserCollection(GameDocument document);
 
-    void updateGame(UpdateParameters updateParameters);
+    void updateGame(List<UpdateParameters> updateParameters);
 
-    void addGameToUserCollection(String user, Game game);
+    void addGameToUserCollection(String user, List<Game> game);
 }

@@ -1,5 +1,5 @@
 ### GET request to example server
-GET http://localhost:3000/api/v1/docs/gamecontroller/getGameByUserAndPlatform?user=rinoa&platform=PS5
+GET http://localhost:3000/api/v1/docs/gamecontroller/getGameByUserAndPlatform?user=davidknight&platform=PS5
 
 ### Create new user with there initial collection
 POST http://localhost:3000/api/v1/docs/gamecontroller/addGamesToUserCollection
@@ -17,12 +17,37 @@ content-type: application/json
 PUT http://localhost:3000/api/v1/docs/gamecontroller/updateGame
 content-type: application/json
 
-{
-  "id": "66d2f1c89e8b280193705f6b",
-  "gameToUpdate": "FF16",
-  "keyToUpdate": "rating",
-  "newValue": 5.0
-}
+[
+  {"id": "66d12ac2e7d3aa4dd220bdf2",
+    "gameToUpdate": "FF8",
+    "keyToUpdate": "rating",
+    "newValue": 5.0
+  },
+  {
+    "id": "66d12ac2e7d3aa4dd220bdf2",
+    "gameToUpdate": "FF8",
+    "keyToUpdate": "releaseDate",
+    "newValue": "2019-09-03"
+  },
+  {
+    "id": "66d12ac2e7d3aa4dd220bdf2",
+    "gameToUpdate": "FF8",
+    "keyToUpdate": "isPreOrder",
+    "newValue": true
+  },
+  {
+    "id": "66d12ac2e7d3aa4dd220bdf2",
+    "gameToUpdate": "FF8",
+    "keyToUpdate": "isInterested",
+    "newValue": true
+  },
+  {
+    "id": "66d12ac2e7d3aa4dd220bdf2",
+    "gameToUpdate": "FF8",
+    "keyToUpdate": "genre",
+    "newValue": "J_RPG"
+  }
+]
 
 ### Change platform for a game
 PUT http://localhost:3000/api/v1/docs/gamecontroller/updateGame
@@ -36,22 +61,40 @@ content-type: application/json
 }
 
 ### Add an game to a users collection
-POST http://localhost:3000/api/v1/docs/gamecontroller/addGameToCollection?user=rinoa
+POST http://localhost:3000/api/v1/docs/gamecontroller/addGameToUserCollection?user=davidknight
 content-type: application/json
 
 {
-  "name": "Ratchet And Clank: Rift Apart",
+  "name": "Exodus",
   "platform": "PS5",
-  "rating": 4.5
+  "rating": 1.0,
+  "releaseDate": "2099-01-01",
+  "isPreOrder": false,
+  "isInterested": true,
+  "genre": "A_RPG"
 }
 
 ### Try to add an game to a invalid users collection
-POST http://localhost:3000/api/v1/docs/gamecontroller/addGameToUserCollection?user=rinoa
+POST http://localhost:3000/api/v1/docs/gamecontroller/addGameToUserCollection?user=davidknight
 content-type: application/json
 
-{
-  "name": "Octopath II",
-  "platform": "PS5",
-  "rating": 5.0,
-  "releaseDate": "2023-02-24"
-}
+[
+  {
+    "name": "Person 4: Golden",
+    "platform": "PSVITA",
+    "rating": 5.0,
+    "releaseDate": "2099-01-01",
+    "isPreOrder": false,
+    "isInterested": true,
+    "genre": "J_RPG"
+  },
+  {
+    "name": "Ys VIII: Lacrimosa of Dana",
+    "platform": "PSVITA",
+    "rating": 5.0,
+    "releaseDate": "2012-11-20",
+    "isPreOrder": false,
+    "isInterested": true,
+    "genre": "J_RPG"
+  }
+]

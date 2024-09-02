@@ -5,5 +5,6 @@ public enum Platforms {
     PS2,
     PS3,
     PS4,
-    PS5
+    PS5,
+    PSVITA
 }
