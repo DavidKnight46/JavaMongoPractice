@@ -31,9 +31,6 @@ public class GameServiceImpl implements GameServiceI {
     public List<GameResponse> getUserGamesByPlatform(String user, Platforms platform) {
         isUsernamePresent(user);
 
-        //val list = gameCollectionRepositoryI.findByPlatformAndUser(platform, user).get();
-        //val gameStream = list.get(0).getGame().stream().filter(Game::getIsPreOrder).toList();
-
         if(gameCollectionRepositoryI.findByPlatformAndUser(platform, user).orElseThrow().isEmpty()){
             throw new NoGamesFoundException(String.format("%s has no games found.",user));
         } else {
