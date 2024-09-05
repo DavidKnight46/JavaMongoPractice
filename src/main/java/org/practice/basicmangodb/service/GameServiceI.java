@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface GameServiceI {
 
-    List<GameResponse> getAllGamesByUser(String user);
+    List<GameResponse> getAllGamesByUser(String user, String orderBy);
 
     GameResponse getUserGamesByPlatform(String user, Platforms platform);
 

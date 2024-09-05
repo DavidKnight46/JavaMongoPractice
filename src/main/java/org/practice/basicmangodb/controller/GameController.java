@@ -25,8 +25,8 @@ public class GameController {
 
     @GetMapping("/getAllGamesForUser")
     @ResponseStatus(HttpStatus.OK)
-    private List<GameResponse> getAllGamesByUser(String user){
-        return gameServiceI.getAllGamesByUser(user);
+    private List<GameResponse> getAllGamesByUser(@RequestParam String user, @RequestParam String orderBy){
+        return gameServiceI.getAllGamesByUser(user, orderBy);
     }
 
     @GetMapping("/getAllGamesForUserByPlatform")
