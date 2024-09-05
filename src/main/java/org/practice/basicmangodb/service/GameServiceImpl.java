@@ -1,6 +1,7 @@
 package org.practice.basicmangodb.service;
 
 import lombok.val;
+import org.practice.basicmangodb.comparators.PlatformComparator;
 import org.practice.basicmangodb.comparators.RatingComparatorAsc;
 import org.practice.basicmangodb.comparators.RatingComparatorDsc;
 import org.practice.basicmangodb.enums.Genre;
@@ -136,6 +137,7 @@ public class GameServiceImpl implements GameServiceI {
             List<Game> list = document.getGame()
                     .stream()
                     .sorted(new RatingComparatorDsc())
+                    //.sorted(new PlatformComparator())
                     .toList();
 
             return getGameResponse(document.getUser(), list, new ArrayList<>());
@@ -143,6 +145,7 @@ public class GameServiceImpl implements GameServiceI {
             val list = document.getGame()
                     .stream()
                     .sorted(new RatingComparatorAsc())
+                    //.sorted(new PlatformComparator())
                     .toList();
 
             return getGameResponse(document.getUser(), list, new ArrayList<>());
