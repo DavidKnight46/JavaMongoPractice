@@ -12,9 +12,9 @@ public interface GameServiceI {
 
     List<GameResponse> getUserGamesByPlatform(String user, Platforms platform);
 
-    void addGamesAndCreateUserCollection(GameDocument document);
+    void addGameToExistingUserCollection(GameDocument document);
 
     void updateGame(List<UpdateParameters> updateParameters);
 
-    void addGameToUserCollection(String user, List<Game> game);
+    void addGamesToUserNewCollection(String user, List<Game> game);
 }

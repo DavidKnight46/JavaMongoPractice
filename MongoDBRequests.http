@@ -1,17 +1,17 @@
 ### GET request to example server
 GET http://localhost:3000/api/v1/docs/gamecontroller/getGameByUserAndPlatform?user=davidknight&platform=PS5
 
-### Create new user with there initial collection
-POST http://localhost:3000/api/v1/docs/gamecontroller/addGamesToUserCollection
+### Create new user with their initial collection
+POST http://localhost:3000/api/v1/docs/gamecontroller/addGamesToUserCollection?user=davidknight
 content-type: application/json
 
-{
-  "user": "rinoa",
-  "game": [
-    {"name": "FF16", "platform": "PS5"},
-    {"name": "Stellar Blade", "platform": "PS5"}
-  ]
-}
+[
+    {"name": "Final Fantasy 16", "platform": "PS5", "rating": 5.0,"releaseDate": "2023-06-22", "isPreOrder": true, "isInterested": false, "genre": "J_RPG", "isCompleted": true},
+    {"name": "Final Fantasy 7: Rebirth", "platform": "PS5", "rating": 5.0,"releaseDate": "2024-02-29", "isPreOrder": true, "isInterested": false, "genre": "J_RPG", "isCompleted": true},
+    {"name": "Stellar Blade", "platform": "PS5", "rating": 4.5,"releaseDate": "2024-04-26", "isPreOrder": false, "isInterested": false, "genre": "A_RPG", "isCompleted": false},
+    {"name": "Ys VIII: Lacrimosa of Dana", "platform": "PSVITA", "rating": 4,"releaseDate": "2016-07-21", "isPreOrder": false, "isInterested": false, "genre": "A_RPG", "isCompleted": false},
+    {"name": "Nier: Automata", "platform": "PS4", "rating": 5.0,"releaseDate": "2017-02-23", "isPreOrder": false, "isInterested": false, "genre": "A_RPG", "isCompleted": false}
+]
 
 ### Change rating for a game
 PUT http://localhost:3000/api/v1/docs/gamecontroller/updateGame

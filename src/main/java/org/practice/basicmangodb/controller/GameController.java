@@ -30,21 +30,21 @@ public class GameController {
         return gameServiceI.getUserGamesByPlatform(user, platform);
     }
 
-    @PostMapping("/addGamesAndCreateUserCollection")
+    @PostMapping("/addGamesToExistingUserCollection")
+    public void addGameToNewUserCollection(@RequestParam String user,
+                                           @RequestBody List<Game> newGame){
+        gameServiceI.addGamesToUserNewCollection(user, newGame);
+    }
+
+    @PostMapping("/addGamesAndCreateNewUserCollection")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addGamesAndCreateUserCollection(@RequestBody GameDocument document){
-        gameServiceI.addGamesAndCreateUserCollection(document);
+    public void addGamesToUserNewCollection(@RequestBody GameDocument document){
+        gameServiceI.addGameToExistingUserCollection(document);
     }
 
     @PutMapping("/updateGame")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateGame(@RequestBody List<UpdateParameters> updateParameters){
         gameServiceI.updateGame(updateParameters);
-    }
-
-    @PostMapping("/addGameToUserCollection")
-    public void addGameToUserCollection(@RequestParam String user,
-                                        @RequestBody List<Game> newGame){
-        gameServiceI.addGameToUserCollection(user, newGame);
     }
 }

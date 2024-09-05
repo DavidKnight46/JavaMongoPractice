@@ -1,5 +1,6 @@
 package org.practice.basicmangodb.service;
 
+import lombok.val;
 import org.practice.basicmangodb.enums.Genre;
 import org.practice.basicmangodb.enums.Platforms;
 import org.practice.basicmangodb.exceptions.NoGamesFoundException;
@@ -13,6 +14,8 @@ import org.practice.basicmangodb.repository.GameCollectionRepositoryI;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -43,8 +46,14 @@ public class GameServiceImpl implements GameServiceI {
     }
 
     @Override
-    public void addGamesAndCreateUserCollection(GameDocument document) {
+    public void addGameToExistingUserCollection(GameDocument document) {
         gameCollectionRepositoryI.insert(document);
+    }
+
+    @Override
+    public void addGamesToUserNewCollection(String user, List<Game> newGame) {
+        GameDocument doc = new GameDocument((ArrayList<Game>) newGame, user);
+        gameCollectionRepositoryI.save(doc);
     }
 
     @Override
@@ -52,28 +61,7 @@ public class GameServiceImpl implements GameServiceI {
         updateParameters.forEach(this::processUpdateParameters);
     }
 
-    @Override
-    public void addGameToUserCollection(String user, List<Game> newGame) {
-        isUsernamePresent(user);
-        newGame.forEach(e -> processAddGameToUserCollection(e, user));
-    }
-
-    private void processAddGameToUserCollection(Game newGame, String user){
-        if(gameCollectionRepositoryI.findAllByUser(user).isPresent()){
-            List<GameDocument> usersExistingGames = gameCollectionRepositoryI.findAllByUser(user).get();
-            GameDocument userDocument = usersExistingGames.stream().findFirst().orElseThrow();
-
-            isSameGameOnSamePlatform(userDocument.getGame(), newGame, user);
-            userDocument.getGame().add(newGame);
-            userDocument.setGame(userDocument.getGame());
-
-            gameCollectionRepositoryI.save(userDocument);
-        } else {
-            throw new UnableToAddGameException(String.format("%s not present",
-                    newGame.getName()));
-        }
-    }
-
+    //
     private void isUsernamePresent(String userName) throws NoUserFoundException {
         if(!gameCollectionRepositoryI.existsByUser(userName)){
             throw new NoUserFoundException(String.format("%s is not registered", userName));
