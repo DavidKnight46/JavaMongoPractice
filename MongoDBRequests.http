@@ -16,6 +16,22 @@ content-type: application/json
     {"name": "Nier: Automata", "platform": "PS4", "rating": 5.0,"releaseDate": "2017-02-23", "isPreOrder": false, "isInterested": false, "genre": "A_RPG", "isCompleted": false}
 ]
 
+### Add an new game to existing user
+POST http://localhost:3000/api/v1/docs/gamecontroller/addAnNewGameForAnExistingUser?user=davidknight
+content-type: application/json
+
+{
+  "name": "Exodus",
+  "platform": "PS5",
+  "rating": 5.0,
+  "releaseDate": "2099-06-22",
+  "isPreOrder": false,
+  "isInterested": true,
+  "genre": "A_RPG",
+  "isCompleted": false
+}
+
+
 ### Change parameters for a game
 PUT http://localhost:3000/api/v1/docs/gamecontroller/updateGameInUserCollection?user=davidknight
 content-type: application/json
@@ -57,6 +73,9 @@ GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesIsPreOrder?isPre
 
 ### Get all games that are completed
 GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesIsCompleted?isCompleted=true&user=davidknight
+
+### Get all games by genre
+GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesByGenre?genre=J_RPG&user=davidknight
 
 ### Get all games by genre
 GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesByGenre?genre=J_RPG&user=davidknight

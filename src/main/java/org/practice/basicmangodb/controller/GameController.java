@@ -10,7 +10,6 @@ import org.practice.basicmangodb.service.GameServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -42,6 +41,12 @@ public class GameController {
         gameServiceI.addGamesToUserNewCollection(document, user);
     }
 
+    @PostMapping("/addAnNewGameForAnExistingUser")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addAnNewGameForAnExistingUser(@RequestBody Game newGame, @RequestParam String user){
+        gameServiceI.addAnNewGameFotAnExistingUser(newGame, user);
+    }
+
     @PutMapping("/updateGameInUserCollection")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateGame(@RequestBody List<UpdateParameters> updateParameters, @RequestParam String user){
@@ -64,5 +69,11 @@ public class GameController {
     @ResponseStatus(HttpStatus.OK)
     public GameResponse getAllGamesByGenre(@RequestParam Genre genre, @RequestParam String user){
         return gameServiceI.getAllGamesByGenre(genre, user);
+    }
+
+    @DeleteMapping("/deleteGameFromUser")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteGameFromUser(@RequestParam String user, @RequestParam String gameName){
+        //TODO: Not yet implemented
     }
 }

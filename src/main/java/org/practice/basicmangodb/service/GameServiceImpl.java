@@ -1,6 +1,5 @@
 package org.practice.basicmangodb.service;
 
-import lombok.val;
 import org.practice.basicmangodb.enums.Genre;
 import org.practice.basicmangodb.enums.Platforms;
 import org.practice.basicmangodb.exceptions.NoGamesFoundException;
@@ -14,7 +13,9 @@ import org.practice.basicmangodb.repository.GameCollectionRepositoryI;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GameServiceImpl implements GameServiceI {
@@ -41,12 +42,11 @@ public class GameServiceImpl implements GameServiceI {
     public GameResponse getUserGamesByPlatform(String user, Platforms platform) {
         isUsernamePresent(user);
 
-        GameResponse response = new GameResponse(user, null);
         ArrayList<Game> gameList = new ArrayList<>();
 
         if(findGamesByTheUser(user).isPresent()){
             List<Game> list = findGamesByTheUser(user).get().get(0).getGame().stream().filter(e -> e.getPlatform() == platform).toList();
-            list.forEach(e ->this.convertToGame(gameList, response, e));
+            list.forEach(e ->this.convertToGame(gameList, e));
 
             return new GameResponse(user,gameList);
         } else {
@@ -62,6 +62,22 @@ public class GameServiceImpl implements GameServiceI {
     }
 
     @Override
+    public void addAnNewGameFotAnExistingUser(Game newGame, String user){
+        isUsernamePresent(user);
+
+        if(gameCollectionRepositoryI.findAllByUser(user).isPresent()){
+            GameDocument gameDocument = gameCollectionRepositoryI.findAllByUser(user).get().get(0);
+
+            if(gameDocument.getGame().contains(newGame)){
+                throw new UnableToAddGameException(String.format("%s already added on platform %s", newGame.getName(), newGame.getPlatform()));
+            } else {
+                gameDocument.getGame().add(newGame);
+                gameCollectionRepositoryI.save(gameDocument);
+            }
+        }
+    }
+
+    @Override
     public void updateGame(String user, List<UpdateParameters> games) {
         this.isUsernamePresent(user);
 
@@ -72,12 +88,11 @@ public class GameServiceImpl implements GameServiceI {
 
     @Override
     public GameResponse getAllGamesIsPreOrder(Boolean isPreOrder, String user) {
-        GameResponse response = new GameResponse(user, null);
         ArrayList<Game> gameList = new ArrayList<>();
 
         if(gameCollectionRepositoryI.findAllByUser(user).isPresent()){
             List<Game> list = gameCollectionRepositoryI.findAllByUser(user).get().get(0).getGame().stream().filter(Game::getIsPreOrder).toList();
-            list.forEach(e ->this.convertToGame(gameList, response, e));
+            list.forEach(e ->this.convertToGame(gameList, e));
 
             return new GameResponse(user, gameList);
         } else {
@@ -87,12 +102,11 @@ public class GameServiceImpl implements GameServiceI {
 
     @Override
     public GameResponse getAllGamesIsCompleted(Boolean isCompleted, String user) {
-        GameResponse response = new GameResponse(user, null);
         ArrayList<Game> gameList = new ArrayList<>();
 
         if(findGamesByTheUser(user).isPresent()){
             List<Game> list = findGamesByTheUser(user).get().get(0).getGame().stream().filter(Game::getIsCompleted).toList();
-            list.forEach(e ->this.convertToGame(gameList, response, e));
+            list.forEach(e ->this.convertToGame(gameList, e));
 
             return new GameResponse(user, gameList);
         } else {
@@ -102,12 +116,11 @@ public class GameServiceImpl implements GameServiceI {
 
     @Override
     public GameResponse getAllGamesByGenre(Genre genre, String user) {
-        GameResponse response = new GameResponse(user, null);
         ArrayList<Game> gameList = new ArrayList<>();
 
         if(findGamesByTheUser(user).isPresent()){
             List<Game> list = findGamesByTheUser(user).get().get(0).getGame().stream().filter(e -> e.getGenre() == genre).toList();
-            list.forEach(e ->this.convertToGame(gameList, response, e));
+            list.forEach(e ->this.convertToGame(gameList, e));
 
             return new GameResponse(user, gameList);
         } else {
@@ -115,8 +128,11 @@ public class GameServiceImpl implements GameServiceI {
         }
     }
 
+    @Override
+    public void deleteGameFromUser(String user, String gameName){}
+
     //
-    private void convertToGame(ArrayList<Game> gameList, GameResponse response, Game game){
+    private void convertToGame(ArrayList<Game> gameList, Game game){
         gameList.add(game);
     }
 
@@ -130,7 +146,7 @@ public class GameServiceImpl implements GameServiceI {
         }
     }
 
-    private void isSameGameOnSamePlatform(List<Game> list, Game newGame, String user){
+    private void isSameGameOnSamePlatform(ArrayList<Game> list, Game newGame, String user){
         if(list.stream().anyMatch(e -> e.getName().contentEquals(newGame.getName()) &&
                 e.getPlatform().toString().contentEquals(newGame.getPlatform().name()))){
            throw new UnableToAddGameException(String.format("%s on %s already found for user %s.",
