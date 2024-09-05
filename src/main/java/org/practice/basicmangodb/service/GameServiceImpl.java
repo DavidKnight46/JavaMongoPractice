@@ -14,9 +14,7 @@ import org.practice.basicmangodb.repository.GameCollectionRepositoryI;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class GameServiceImpl implements GameServiceI {
@@ -31,37 +29,101 @@ public class GameServiceImpl implements GameServiceI {
     }
 
     @Override
-    public List<GameResponse> getUserGamesByPlatform(String user, Platforms platform) {
-        isUsernamePresent(user);
-
-        if(gameCollectionRepositoryI.findByPlatformAndUser(platform, user).orElseThrow().isEmpty()){
-            throw new NoGamesFoundException(String.format("%s has no games found.",user));
+    public List<GameResponse> getAllGamesByUser(String user){
+        if(gameCollectionRepositoryI.findAllByUser(user).isPresent()) {
+            return gameCollectionRepositoryI.findAllByUser(user).get().stream().map(this::mapToGameResponse).toList();
         } else {
-            return gameCollectionRepositoryI.findByPlatformAndUser(platform, user)
-                    .orElseThrow()
-                    .stream()
-                    .map(this::mapToGameResponse)
-                    .toList();
+            throw new NoGamesFoundException("");
         }
     }
 
     @Override
-    public void addGameToExistingUserCollection(GameDocument document) {
-        gameCollectionRepositoryI.insert(document);
+    public GameResponse getUserGamesByPlatform(String user, Platforms platform) {
+        isUsernamePresent(user);
+
+        GameResponse response = new GameResponse(user, null);
+        ArrayList<Game> gameList = new ArrayList<>();
+
+        if(findGamesByTheUser(user).isPresent()){
+            List<Game> list = findGamesByTheUser(user).get().get(0).getGame().stream().filter(e -> e.getPlatform() == platform).toList();
+            list.forEach(e ->this.convertToGame(gameList, response, e));
+
+            return new GameResponse(user,gameList);
+        } else {
+            throw new NoGamesFoundException("");
+        }
     }
 
     @Override
-    public void addGamesToUserNewCollection(String user, List<Game> newGame) {
-        GameDocument doc = new GameDocument((ArrayList<Game>) newGame, user);
-        gameCollectionRepositoryI.save(doc);
+    public void addGamesToUserNewCollection(List<Game> newGames, String user) {
+        GameDocument gameDocument = new GameDocument((ArrayList<Game>) newGames, user);
+
+        gameCollectionRepositoryI.save(gameDocument);
     }
 
     @Override
-    public void updateGame(List<UpdateParameters> updateParameters){
-        updateParameters.forEach(this::processUpdateParameters);
+    public void updateGame(String user, List<UpdateParameters> games) {
+        this.isUsernamePresent(user);
+
+        for(UpdateParameters update : games) {
+            this.processUpdateParameters(update);
+        }
+    }
+
+    @Override
+    public GameResponse getAllGamesIsPreOrder(Boolean isPreOrder, String user) {
+        GameResponse response = new GameResponse(user, null);
+        ArrayList<Game> gameList = new ArrayList<>();
+
+        if(gameCollectionRepositoryI.findAllByUser(user).isPresent()){
+            List<Game> list = gameCollectionRepositoryI.findAllByUser(user).get().get(0).getGame().stream().filter(Game::getIsPreOrder).toList();
+            list.forEach(e ->this.convertToGame(gameList, response, e));
+
+            return new GameResponse(user, gameList);
+        } else {
+            throw new NoGamesFoundException("");
+        }
+    }
+
+    @Override
+    public GameResponse getAllGamesIsCompleted(Boolean isCompleted, String user) {
+        GameResponse response = new GameResponse(user, null);
+        ArrayList<Game> gameList = new ArrayList<>();
+
+        if(findGamesByTheUser(user).isPresent()){
+            List<Game> list = findGamesByTheUser(user).get().get(0).getGame().stream().filter(Game::getIsCompleted).toList();
+            list.forEach(e ->this.convertToGame(gameList, response, e));
+
+            return new GameResponse(user, gameList);
+        } else {
+            throw new NoGamesFoundException("");
+        }
+    }
+
+    @Override
+    public GameResponse getAllGamesByGenre(Genre genre, String user) {
+        GameResponse response = new GameResponse(user, null);
+        ArrayList<Game> gameList = new ArrayList<>();
+
+        if(findGamesByTheUser(user).isPresent()){
+            List<Game> list = findGamesByTheUser(user).get().get(0).getGame().stream().filter(e -> e.getGenre() == genre).toList();
+            list.forEach(e ->this.convertToGame(gameList, response, e));
+
+            return new GameResponse(user, gameList);
+        } else {
+            throw new NoGamesFoundException("");
+        }
     }
 
     //
+    private void convertToGame(ArrayList<Game> gameList, GameResponse response, Game game){
+        gameList.add(game);
+    }
+
+    private Optional<ArrayList<GameDocument>> findGamesByTheUser(String user){
+        return gameCollectionRepositoryI.findAllByUser(user);
+    }
+
     private void isUsernamePresent(String userName) throws NoUserFoundException {
         if(!gameCollectionRepositoryI.existsByUser(userName)){
             throw new NoUserFoundException(String.format("%s is not registered", userName));

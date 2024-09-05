@@ -1,8 +1,8 @@
 package org.practice.basicmangodb.service;
 
+import org.practice.basicmangodb.enums.Genre;
 import org.practice.basicmangodb.enums.Platforms;
 import org.practice.basicmangodb.models.game.Game;
-import org.practice.basicmangodb.models.game.GameDocument;
 import org.practice.basicmangodb.models.game.GameResponse;
 import org.practice.basicmangodb.models.game.UpdateParameters;
 
@@ -10,11 +10,17 @@ import java.util.List;
 
 public interface GameServiceI {
 
-    List<GameResponse> getUserGamesByPlatform(String user, Platforms platform);
+    List<GameResponse> getAllGamesByUser(String user);
 
-    void addGameToExistingUserCollection(GameDocument document);
+    GameResponse getUserGamesByPlatform(String user, Platforms platform);
 
-    void updateGame(List<UpdateParameters> updateParameters);
+    void addGamesToUserNewCollection(List<Game> newGames, String user);
 
-    void addGamesToUserNewCollection(String user, List<Game> game);
+    void updateGame(String user, List<UpdateParameters> game);
+
+    GameResponse getAllGamesIsPreOrder(Boolean isPreOrder, String user);
+
+    GameResponse getAllGamesIsCompleted(Boolean isCompleted, String user);
+
+    GameResponse getAllGamesByGenre(Genre genre, String user);
 }

@@ -1,8 +1,11 @@
-### GET request to example server
-GET http://localhost:3000/api/v1/docs/gamecontroller/getGameByUserAndPlatform?user=davidknight&platform=PS5
+### GET all games for a current user
+GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesForUser?user=davidknight
+
+### GET all games for a current user by platform
+GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesForUserByPlatform?user=davidknight&platform=PS5
 
 ### Create new user with their initial collection
-POST http://localhost:3000/api/v1/docs/gamecontroller/addGamesToUserCollection?user=davidknight
+POST http://localhost:3000/api/v1/docs/gamecontroller/addNewGamesToNewUser?user=davidknight
 content-type: application/json
 
 [
@@ -13,8 +16,8 @@ content-type: application/json
     {"name": "Nier: Automata", "platform": "PS4", "rating": 5.0,"releaseDate": "2017-02-23", "isPreOrder": false, "isInterested": false, "genre": "A_RPG", "isCompleted": false}
 ]
 
-### Change rating for a game
-PUT http://localhost:3000/api/v1/docs/gamecontroller/updateGame
+### Change parameters for a game
+PUT http://localhost:3000/api/v1/docs/gamecontroller/updateGameInUserCollection?user=davidknight
 content-type: application/json
 
 [
@@ -49,52 +52,11 @@ content-type: application/json
   }
 ]
 
-### Change platform for a game
-PUT http://localhost:3000/api/v1/docs/gamecontroller/updateGame
-content-type: application/json
+### Get all games that were pre-orders
+GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesIsPreOrder?isPreOrder=true&user=davidknight
 
-{
-  "id": "66d2f1c89e8b280193705f6b",
-  "gameToUpdate": "FF16",
-  "keyToUpdate": "platform",
-  "newValue": "PS5"
-}
+### Get all games that are completed
+GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesIsCompleted?isCompleted=true&user=davidknight
 
-### Add an game to a users collection
-POST http://localhost:3000/api/v1/docs/gamecontroller/addGameToUserCollection?user=davidknight
-content-type: application/json
-
-{
-  "name": "Exodus",
-  "platform": "PS5",
-  "rating": 1.0,
-  "releaseDate": "2099-01-01",
-  "isPreOrder": false,
-  "isInterested": true,
-  "genre": "A_RPG"
-}
-
-### Try to add an game to a invalid users collection
-POST http://localhost:3000/api/v1/docs/gamecontroller/addGameToUserCollection?user=davidknight
-content-type: application/json
-
-[
-  {
-    "name": "Person 4: Golden",
-    "platform": "PSVITA",
-    "rating": 5.0,
-    "releaseDate": "2099-01-01",
-    "isPreOrder": false,
-    "isInterested": true,
-    "genre": "J_RPG"
-  },
-  {
-    "name": "Ys VIII: Lacrimosa of Dana",
-    "platform": "PSVITA",
-    "rating": 5.0,
-    "releaseDate": "2012-11-20",
-    "isPreOrder": false,
-    "isInterested": true,
-    "genre": "J_RPG"
-  }
-]
+### Get all games by genre
+GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesByGenre?genre=J_RPG&user=davidknight
