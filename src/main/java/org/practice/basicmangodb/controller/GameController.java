@@ -25,55 +25,65 @@ public class GameController {
 
     @GetMapping("/getAllGamesForUser")
     @ResponseStatus(HttpStatus.OK)
-    private List<GameResponse> getAllGamesByUser(@RequestParam String user, @RequestParam String orderBy){
-        return gameServiceI.getAllGamesByUser(user, orderBy);
+    private List<GameResponse> getAllGamesByUser(@RequestParam String user,
+                                                 @RequestParam(defaultValue = "ASC") String orderBy,
+                                                 @RequestParam(defaultValue = "RATING") String sortedBy){
+        return gameServiceI.getAllGamesByUser(user, orderBy, sortedBy);
     }
 
     @GetMapping("/getAllGamesForUserByPlatform")
     @ResponseStatus(HttpStatus.OK)
-    public GameResponse getUserGamesByPlatform(@RequestParam String user, @RequestParam Platforms platform){
+    public GameResponse getUserGamesByPlatform(@RequestParam String user,
+                                               @RequestParam Platforms platform){
         return gameServiceI.getUserGamesByPlatform(user, platform);
     }
 
     @PostMapping("/addNewGamesToNewUser")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addGamesToUserNewCollection(@RequestBody List<Game> document, @RequestParam String user){
+    public void addGamesToUserNewCollection(@RequestBody List<Game> document,
+                                            @RequestParam String user){
         gameServiceI.addGamesToUserNewCollection(document, user);
     }
 
     @PostMapping("/addAnNewGameForAnExistingUser")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addAnNewGameForAnExistingUser(@RequestBody Game newGame, @RequestParam String user){
+    public void addAnNewGameForAnExistingUser(@RequestBody Game newGame,
+                                              @RequestParam String user){
         gameServiceI.addAnNewGameFotAnExistingUser(newGame, user);
     }
 
     @PutMapping("/updateGameInUserCollection")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void updateGame(@RequestBody List<UpdateParameters> updateParameters, @RequestParam String user){
+    public void updateGame(@RequestBody List<UpdateParameters> updateParameters,
+                           @RequestParam String user){
         gameServiceI.updateGame(user, updateParameters);
     }
 
     @GetMapping("/getAllGamesIsPreOrder")
     @ResponseStatus(HttpStatus.OK)
-    public GameResponse getAllGamesIsPreOrder(@RequestParam Boolean isPreOrder, @RequestParam String user){
+    public GameResponse getAllGamesIsPreOrder(@RequestParam Boolean isPreOrder,
+                                              @RequestParam String user){
         return gameServiceI.getAllGamesIsPreOrder(isPreOrder, user);
     }
 
     @GetMapping("/getAllGamesIsCompleted")
     @ResponseStatus(HttpStatus.OK)
-    public GameResponse getAllGamesIsCompleted(@RequestParam Boolean isCompleted, @RequestParam String user){
+    public GameResponse getAllGamesIsCompleted(@RequestParam Boolean isCompleted,
+                                               @RequestParam String user){
         return gameServiceI.getAllGamesIsCompleted(isCompleted, user);
     }
 
     @GetMapping("/getAllGamesByGenre")
     @ResponseStatus(HttpStatus.OK)
-    public GameResponse getAllGamesByGenre(@RequestParam Genre genre, @RequestParam String user){
+    public GameResponse getAllGamesByGenre(@RequestParam Genre genre,
+                                           @RequestParam String user){
         return gameServiceI.getAllGamesByGenre(genre, user);
     }
 
     @DeleteMapping("/deleteGameFromUser")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteGameFromUser(@RequestParam String user, @RequestParam String gameName){
+    public void deleteGameFromUser(@RequestParam String user,
+                                   @RequestParam String gameName){
         //TODO: Not yet implemented
     }
 }

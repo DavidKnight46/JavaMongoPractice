@@ -1,7 +1,8 @@
 package org.practice.basicmangodb.service;
 
 import lombok.val;
-import org.practice.basicmangodb.comparators.PlatformComparator;
+import org.practice.basicmangodb.comparators.PlatformComparatorAsc;
+import org.practice.basicmangodb.comparators.PlatformComparatorDsc;
 import org.practice.basicmangodb.comparators.RatingComparatorAsc;
 import org.practice.basicmangodb.comparators.RatingComparatorDsc;
 import org.practice.basicmangodb.enums.Genre;
@@ -34,15 +35,16 @@ public class GameServiceImpl implements GameServiceI {
     }
 
     @Override
-    public List<GameResponse> getAllGamesByUser(String user, String orderBy){
+    public List<GameResponse> getAllGamesByUser(String user, String orderBy, String sortedBy){
         if(gameCollectionRepositoryI.findAllByUser(user).isPresent()) {
             return gameCollectionRepositoryI.findAllByUser(user)
                     .get()
                     .stream()
-                    .map(e -> this.mapToGameResponse(e, orderBy))
+                    .map(e -> this.mapToGameResponse(e, orderBy, sortedBy))
                     .toList();
+
         } else {
-            throw new NoGamesFoundException("");
+            throw new NoGamesFoundException("No games found matching criteria.");
         }
     }
 
@@ -53,7 +55,14 @@ public class GameServiceImpl implements GameServiceI {
         ArrayList<Game> gameList = new ArrayList<>();
 
         if(findGamesByTheUser(user).isPresent()){
-            List<Game> list = findGamesByTheUser(user).get().get(0).getGame().stream().filter(e -> e.getPlatform() == platform).toList();
+            List<Game> list = findGamesByTheUser(user)
+                    .get()
+                    .get(0)
+                    .getGame()
+                    .stream()
+                    .filter(e -> e.getPlatform() == platform)
+                    .toList();
+
             return getGameResponse(user, list, gameList);
         } else {
             throw new NoGamesFoundException("");
@@ -97,10 +106,17 @@ public class GameServiceImpl implements GameServiceI {
         ArrayList<Game> gameList = new ArrayList<>();
 
         if(gameCollectionRepositoryI.findAllByUser(user).isPresent()){
-            List<Game> list = gameCollectionRepositoryI.findAllByUser(user).get().get(0).getGame().stream().filter(Game::getIsPreOrder).toList();
+            List<Game> list = gameCollectionRepositoryI.findAllByUser(user)
+                    .get()
+                    .get(0)
+                    .getGame()
+                    .stream()
+                    .filter(Game::getIsPreOrder)
+                    .toList();
+
             return getGameResponse(user, list, gameList);
         } else {
-            throw new NoGamesFoundException("");
+            throw new NoGamesFoundException("There are no games on pre order.");
         }
     }
 
@@ -112,7 +128,7 @@ public class GameServiceImpl implements GameServiceI {
             List<Game> list = findGamesByTheUser(user).get().get(0).getGame().stream().filter(Game::getIsCompleted).toList();
             return getGameResponse(user, list, gameList);
         } else {
-            throw new NoGamesFoundException("");
+            throw new NoGamesFoundException("There are no games are completed");
         }
     }
 
@@ -121,10 +137,17 @@ public class GameServiceImpl implements GameServiceI {
         ArrayList<Game> gameList = new ArrayList<>();
 
         if(findGamesByTheUser(user).isPresent()){
-            List<Game> list = findGamesByTheUser(user).get().get(0).getGame().stream().filter(e -> e.getGenre() == genre).toList();
+            List<Game> list = findGamesByTheUser(user)
+                    .get()
+                    .get(0)
+                    .getGame()
+                    .stream()
+                    .filter(e -> e.getGenre() == genre)
+                    .toList();
+
             return getGameResponse(user, list, gameList);
         } else {
-            throw new NoGamesFoundException("");
+            throw new NoGamesFoundException("There are no games in selected genre.");
         }
     }
 
@@ -132,8 +155,8 @@ public class GameServiceImpl implements GameServiceI {
     public void deleteGameFromUser(String user, String gameName){}
 
     //
-    private GameResponse mapToGameResponse(GameDocument document, String orderBy){
-        if(orderBy.contentEquals("DESC")) {
+    private GameResponse mapToGameResponse(GameDocument document, String orderBy, String sortedBy){
+        if(orderBy.contentEquals("DESC") && sortedBy.contentEquals("RATING")) {
             List<Game> list = document.getGame()
                     .stream()
                     .sorted(new RatingComparatorDsc())
@@ -141,11 +164,34 @@ public class GameServiceImpl implements GameServiceI {
                     .toList();
 
             return getGameResponse(document.getUser(), list, new ArrayList<>());
-        } else {
+        } else if(orderBy.contentEquals("ASC") && sortedBy.contentEquals("RATING")) {
             val list = document.getGame()
                     .stream()
                     .sorted(new RatingComparatorAsc())
                     //.sorted(new PlatformComparator())
+                    .toList();
+
+            return getGameResponse(document.getUser(), list, new ArrayList<>());
+        } else if(orderBy.contentEquals("DESC") && sortedBy.contentEquals("PLATORM")){
+            val list = document.getGame()
+                    .stream()
+                    //.sorted(new RatingComparatorDsc())
+                    .sorted(new PlatformComparatorAsc())
+                    .toList();
+
+            return getGameResponse(document.getUser(), list, new ArrayList<>());
+        } else if(orderBy.contentEquals("ASC") && sortedBy.contentEquals("PLATORM")){
+            val list = document.getGame()
+                    .stream()
+                    //.sorted(new RatingComparatorAsc())
+                    .sorted(new PlatformComparatorDsc())
+                    .toList();
+
+            return getGameResponse(document.getUser(), list, new ArrayList<>());
+        } else {
+            val list = document
+                    .getGame()
+                    .stream()
                     .toList();
 
             return getGameResponse(document.getUser(), list, new ArrayList<>());
@@ -208,6 +254,4 @@ public class GameServiceImpl implements GameServiceI {
             gameCollectionRepositoryI.save(gameDocument);
         }
     }
-
-
 }
