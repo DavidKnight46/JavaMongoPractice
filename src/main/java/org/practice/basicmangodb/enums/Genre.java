@@ -7,5 +7,6 @@ public enum Genre {
     ActionAdventure,
     FIGHTING,
     FPS,
-    STRATEGY
+    STRATEGY,
+    PLATFORMER
 }

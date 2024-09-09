@@ -19,10 +19,11 @@ public class Game {
     private Boolean isInterested;
     private Genre genre;
     private Boolean isCompleted;
+    private Boolean isOwned;
 
     public Game(){}
 
-    public Game(String name, Platforms platform, Double rating, LocalDate releaseDate, Boolean isPreOrder, Boolean isInterested, Genre genre, Boolean isCompleted){
+    public Game(String name, Platforms platform, Double rating, LocalDate releaseDate, Boolean isPreOrder, Boolean isInterested, Genre genre, Boolean isCompleted, Boolean isOwned){
         this.name = name;
         this.platform = platform;
         this.rating = rating;
@@ -31,6 +32,7 @@ public class Game {
         this.isInterested = isInterested;
         this.genre = genre;
         this.isCompleted = isCompleted;
+        this.isOwned = isOwned;
     }
 
 }

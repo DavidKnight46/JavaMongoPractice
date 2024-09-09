@@ -16,7 +16,7 @@ public interface GameServiceI {
 
     GameResponse getUserGamesByPlatform(String user, Platforms platform);
 
-    void addAnNewGameFotAnExistingUser(Game newGame, String user);
+    void addAnNewGameFotAnExistingUser(List<Game> newGame, String user);
 
     void addGamesToUserNewCollection(List<Game> newGames, String user);
 

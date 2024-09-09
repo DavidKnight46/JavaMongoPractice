@@ -20,16 +20,40 @@ content-type: application/json
 POST http://localhost:3000/api/v1/docs/gamecontroller/addAnNewGameForAnExistingUser?user=davidknight
 content-type: application/json
 
-{
-  "name": "Exodus",
+[{
+  "name": "Astro Bot",
   "platform": "PS5",
   "rating": 5.0,
-  "releaseDate": "2099-06-22",
+  "releaseDate": "2024-09-06",
   "isPreOrder": false,
   "isInterested": true,
-  "genre": "A_RPG",
-  "isCompleted": false
-}
+  "genre": "PLATFORMER",
+  "isCompleted": false,
+  "isOwned": false
+},
+  {
+    "name": "Black Myth Wukong",
+    "platform": "PS5",
+    "rating": 5.0,
+    "releaseDate": "2024-08-20",
+    "isPreOrder": false,
+    "isInterested": true,
+    "genre": "A_RPG",
+    "isCompleted": false,
+    "isOwned": false
+  },
+  {
+    "name": "Space Marine 2",
+    "platform": "PS5",
+    "rating": 5.0,
+    "releaseDate": "2024-09-09",
+    "isPreOrder": false,
+    "isInterested": true,
+    "genre": "ActionAdventure",
+    "isCompleted": false,
+    "isOwned": false
+  }
+]
 
 
 ### Change parameters for a game

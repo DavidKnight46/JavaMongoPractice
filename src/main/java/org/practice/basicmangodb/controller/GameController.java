@@ -47,7 +47,7 @@ public class GameController {
 
     @PostMapping("/addAnNewGameForAnExistingUser")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addAnNewGameForAnExistingUser(@RequestBody Game newGame,
+    public void addAnNewGameForAnExistingUser(@RequestBody List<Game> newGame,
                                               @RequestParam String user){
         gameServiceI.addAnNewGameFotAnExistingUser(newGame, user);
     }

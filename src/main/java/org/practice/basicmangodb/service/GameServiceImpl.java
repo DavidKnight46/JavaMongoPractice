@@ -77,17 +77,19 @@ public class GameServiceImpl implements GameServiceI {
     }
 
     @Override
-    public void addAnNewGameFotAnExistingUser(Game newGame, String user){
+    public void addAnNewGameFotAnExistingUser(List<Game> newGame, String user){
         isUsernamePresent(user);
 
         if(gameCollectionRepositoryI.findAllByUser(user).isPresent()){
             GameDocument gameDocument = gameCollectionRepositoryI.findAllByUser(user).get().get(0);
 
-            if(gameDocument.getGame().contains(newGame)){
-                throw new UnableToAddGameException(String.format("%s already added on platform %s", newGame.getName(), newGame.getPlatform()));
-            } else {
-                gameDocument.getGame().add(newGame);
-                gameCollectionRepositoryI.save(gameDocument);
+            for(Game game : newGame){
+                if(gameDocument.getGame().contains(game)){
+                    throw new UnableToAddGameException(String.format("%s already added on platform %s", game.getName(), game.getPlatform()));
+                } else {
+                    gameDocument.getGame().add(game);
+                    gameCollectionRepositoryI.save(gameDocument);
+                }
             }
         }
     }
