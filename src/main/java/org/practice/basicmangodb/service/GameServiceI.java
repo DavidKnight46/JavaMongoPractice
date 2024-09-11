@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface GameServiceI {
 
@@ -29,4 +30,6 @@ public interface GameServiceI {
     GameResponse getAllGamesByGenre(Genre genre, String user);
 
     void deleteGameFromUser(String user, String gameName);
+
+    Optional<GameResponse> getAllGamesNotReleased(String user);
 }

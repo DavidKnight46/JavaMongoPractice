@@ -17,7 +17,9 @@ import org.practice.basicmangodb.models.game.UpdateParameters;
 import org.practice.basicmangodb.repository.GameCollectionRepositoryI;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -127,7 +129,14 @@ public class GameServiceImpl implements GameServiceI {
         ArrayList<Game> gameList = new ArrayList<>();
 
         if(findGamesByTheUser(user).isPresent()){
-            List<Game> list = findGamesByTheUser(user).get().get(0).getGame().stream().filter(Game::getIsCompleted).toList();
+            List<Game> list = findGamesByTheUser(user)
+                    .get()
+                    .get(0)
+                    .getGame()
+                    .stream()
+                    .filter(e -> e.getIsCompleted() == isCompleted)
+                    .toList();
+
             return getGameResponse(user, list, gameList);
         } else {
             throw new NoGamesFoundException("There are no games are completed");
@@ -156,7 +165,24 @@ public class GameServiceImpl implements GameServiceI {
     @Override
     public void deleteGameFromUser(String user, String gameName){}
 
-    //
+    @Override
+    public Optional<GameResponse> getAllGamesNotReleased(String user){
+        GameResponse gameResponse = null;
+
+        if(gameCollectionRepositoryI.findAllByUser(user).isPresent()){
+            ArrayList<Game> listOfGamesForUser = gameCollectionRepositoryI.findAllByUser(user).get().get(0).getGame();
+
+            var gamesToBeReleasedList = listOfGamesForUser
+                    .stream()
+                    .filter(e -> e.getReleaseDate().isAfter(LocalDate.now()))
+                    .toArray(Game[]::new);
+
+            gameResponse = new GameResponse(user, new ArrayList<>(List.of(gamesToBeReleasedList)));
+        }
+
+        return Optional.ofNullable(gameResponse);
+    }
+
     private GameResponse mapToGameResponse(GameDocument document, String orderBy, String sortedBy){
         if(orderBy.contentEquals("DESC") && sortedBy.contentEquals("RATING")) {
             List<Game> list = document.getGame()

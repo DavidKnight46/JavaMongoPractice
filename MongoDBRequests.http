@@ -103,3 +103,6 @@ GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesByGenre?genre=J_
 
 ### Get all games by genre
 GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesByGenre?genre=J_RPG&user=davidknight
+
+### Get all games not released
+GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesNotReleased?user=davidknight
