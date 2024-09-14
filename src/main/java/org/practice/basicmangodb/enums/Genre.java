@@ -4,9 +4,12 @@ public enum Genre {
     RPG,
     A_RPG,
     J_RPG,
+    C_RPG,
     ActionAdventure,
     FIGHTING,
     FPS,
     STRATEGY,
-    PLATFORMER
+    PLATFORMER,
+    METROVANIA,
+    RACING
 }

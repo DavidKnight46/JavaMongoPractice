@@ -6,5 +6,17 @@ public enum Platforms {
     PS3,
     PS2,
     PS1,
-    PSVITA
+    PSP,
+    PSVITA,
+    PSVR,
+    PSVR2,
+    XBOX,
+    XBOX_360,
+    XBOX_ONE,
+    XBOX_ONE_X,
+    XBOX_SERIES_X,
+    XBOX_SERIES_S,
+    NINTENDO_SWITCH,
+    NINTENDO_3DS,
+    PC
 }

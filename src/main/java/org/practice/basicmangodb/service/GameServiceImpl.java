@@ -1,10 +1,7 @@
 package org.practice.basicmangodb.service;
 
 import lombok.val;
-import org.practice.basicmangodb.comparators.PlatformComparatorAsc;
-import org.practice.basicmangodb.comparators.PlatformComparatorDsc;
-import org.practice.basicmangodb.comparators.RatingComparatorAsc;
-import org.practice.basicmangodb.comparators.RatingComparatorDsc;
+import org.practice.basicmangodb.comparators.*;
 import org.practice.basicmangodb.enums.Genre;
 import org.practice.basicmangodb.enums.Platforms;
 import org.practice.basicmangodb.exceptions.NoGamesFoundException;
@@ -134,6 +131,7 @@ public class GameServiceImpl implements GameServiceI {
                     .get(0)
                     .getGame()
                     .stream()
+                    .sorted(new ReleaseDateComparatorDsc())
                     .filter(e -> e.getIsCompleted() == isCompleted)
                     .toList();
 
@@ -153,6 +151,7 @@ public class GameServiceImpl implements GameServiceI {
                     .get(0)
                     .getGame()
                     .stream()
+                    .sorted(new ReleaseDateComparatorAsc())
                     .filter(e -> e.getGenre() == genre)
                     .toList();
 
@@ -188,6 +187,7 @@ public class GameServiceImpl implements GameServiceI {
             List<Game> list = document.getGame()
                     .stream()
                     .sorted(new RatingComparatorDsc())
+                    .sorted(new ReleaseDateComparatorAsc())
                     //.sorted(new PlatformComparator())
                     .toList();
 
@@ -196,6 +196,7 @@ public class GameServiceImpl implements GameServiceI {
             val list = document.getGame()
                     .stream()
                     .sorted(new RatingComparatorAsc())
+                    .sorted(new ReleaseDateComparatorAsc())
                     //.sorted(new PlatformComparator())
                     .toList();
 
@@ -205,6 +206,7 @@ public class GameServiceImpl implements GameServiceI {
                     .stream()
                     //.sorted(new RatingComparatorDsc())
                     .sorted(new PlatformComparatorAsc())
+                    .sorted(new ReleaseDateComparatorAsc())
                     .toList();
 
             return getGameResponse(document.getUser(), list, new ArrayList<>());
@@ -213,6 +215,7 @@ public class GameServiceImpl implements GameServiceI {
                     .stream()
                     //.sorted(new RatingComparatorAsc())
                     .sorted(new PlatformComparatorDsc())
+                    .sorted(new ReleaseDateComparatorAsc())
                     .toList();
 
             return getGameResponse(document.getUser(), list, new ArrayList<>());
@@ -220,6 +223,7 @@ public class GameServiceImpl implements GameServiceI {
             val list = document
                     .getGame()
                     .stream()
+                    .sorted(new ReleaseDateComparatorAsc())
                     .toList();
 
             return getGameResponse(document.getUser(), list, new ArrayList<>());
