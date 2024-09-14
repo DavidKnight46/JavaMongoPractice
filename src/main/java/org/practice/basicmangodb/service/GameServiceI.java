@@ -5,8 +5,6 @@ import org.practice.basicmangodb.enums.Platforms;
 import org.practice.basicmangodb.models.game.Game;
 import org.practice.basicmangodb.models.game.GameResponse;
 import org.practice.basicmangodb.models.game.UpdateParameters;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,4 +30,6 @@ public interface GameServiceI {
     void deleteGameFromUser(String user, String gameName);
 
     Optional<GameResponse> getAllGamesNotReleased(String user);
+
+    GameResponse getAllGamesOwned(boolean isOwned, String user);
 }

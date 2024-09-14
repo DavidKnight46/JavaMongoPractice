@@ -14,9 +14,7 @@ import org.practice.basicmangodb.models.game.UpdateParameters;
 import org.practice.basicmangodb.repository.GameCollectionRepositoryI;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -180,6 +178,26 @@ public class GameServiceImpl implements GameServiceI {
         }
 
         return Optional.ofNullable(gameResponse);
+    }
+
+    @Override
+    public GameResponse getAllGamesOwned(boolean isOwned, String user){
+        ArrayList<Game> gameList = new ArrayList<>();
+
+        if(findGamesByTheUser(user).isPresent()){
+            List<Game> list = findGamesByTheUser(user)
+                    .get()
+                    .get(0)
+                    .getGame()
+                    .stream()
+                    .sorted(new ReleaseDateComparatorAsc())
+                    .filter(e -> e.getIsOwned() == isOwned)
+                    .toList();
+
+            return getGameResponse(user, list, gameList);
+        } else {
+            throw new NoGamesFoundException("There are no games are completed");
+        }
     }
 
     private GameResponse mapToGameResponse(GameDocument document, String orderBy, String sortedBy){

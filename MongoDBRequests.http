@@ -21,39 +21,16 @@ POST http://localhost:3000/api/v1/docs/gamecontroller/addAnNewGameForAnExistingU
 content-type: application/json
 
 [{
-  "name": "Astro Bot",
+  "name": "Unicorn Overlord",
   "platform": "PS5",
   "rating": 5.0,
-  "releaseDate": "2024-09-06",
+  "releaseDate": "2024-03-08",
   "isPreOrder": false,
   "isInterested": true,
-  "genre": "PLATFORMER",
+  "genre": "RPG",
   "isCompleted": false,
   "isOwned": false
-},
-  {
-    "name": "Black Myth Wukong",
-    "platform": "PS5",
-    "rating": 5.0,
-    "releaseDate": "2024-08-20",
-    "isPreOrder": false,
-    "isInterested": true,
-    "genre": "A_RPG",
-    "isCompleted": false,
-    "isOwned": false
-  },
-  {
-    "name": "Space Marine 2",
-    "platform": "PS5",
-    "rating": 5.0,
-    "releaseDate": "2024-09-09",
-    "isPreOrder": false,
-    "isInterested": true,
-    "genre": "ActionAdventure",
-    "isCompleted": false,
-    "isOwned": false
-  }
-]
+}]
 
 
 ### Change parameters for a game
@@ -62,33 +39,39 @@ content-type: application/json
 
 [
   {"id": "66d12ac2e7d3aa4dd220bdf2",
-    "gameToUpdate": "FF8",
-    "keyToUpdate": "rating",
-    "newValue": 5.0
+    "gameToUpdate": "Exodus",
+    "keyToUpdate": "isOwned",
+    "newValue": false
   },
   {
     "id": "66d12ac2e7d3aa4dd220bdf2",
-    "gameToUpdate": "FF8",
-    "keyToUpdate": "releaseDate",
-    "newValue": "2019-09-03"
-  },
-  {
-    "id": "66d12ac2e7d3aa4dd220bdf2",
-    "gameToUpdate": "FF8",
-    "keyToUpdate": "isPreOrder",
+    "gameToUpdate": "Stellar Blade",
+    "keyToUpdate": "isOwned",
     "newValue": true
   },
   {
     "id": "66d12ac2e7d3aa4dd220bdf2",
-    "gameToUpdate": "FF8",
-    "keyToUpdate": "isInterested",
+    "gameToUpdate": "Final Fantasy 7: Rebirth",
+    "keyToUpdate": "isOwned",
     "newValue": true
   },
   {
     "id": "66d12ac2e7d3aa4dd220bdf2",
-    "gameToUpdate": "FF8",
-    "keyToUpdate": "genre",
-    "newValue": "J_RPG"
+    "gameToUpdate": "Final Fantasy 16",
+    "keyToUpdate": "isOwned",
+    "newValue": true
+  },
+  {
+    "id": "66d12ac2e7d3aa4dd220bdf2",
+    "gameToUpdate": "Nier: Automata",
+    "keyToUpdate": "isOwned",
+    "newValue": true
+  },
+  {
+    "id": "66d12ac2e7d3aa4dd220bdf2",
+    "gameToUpdate": "Ys VIII: Lacrimosa of Dana",
+    "keyToUpdate": "isOwned",
+    "newValue": true
   }
 ]
 
@@ -106,3 +89,6 @@ GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesByGenre?genre=J_
 
 ### Get all games not released
 GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesNotReleased?user=davidknight
+
+### Get all games owned
+GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesUserOwns?user=davidknight

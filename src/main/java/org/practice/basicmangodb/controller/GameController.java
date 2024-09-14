@@ -93,4 +93,10 @@ public class GameController {
     public Optional<GameResponse> getAllGamesNotReleased(@RequestParam String user){
         return gameServiceI.getAllGamesNotReleased(user);
     }
+
+    @GetMapping("/getAllGamesUserOwns")
+    @ResponseStatus(HttpStatus.OK)
+    public GameResponse getAllGamesOwnedByUser(@RequestParam String user){
+        return gameServiceI.getAllGamesOwned(true, user);
+    }
 }
