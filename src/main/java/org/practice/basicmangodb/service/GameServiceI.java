@@ -13,7 +13,7 @@ public interface GameServiceI {
 
     List<GameResponse> getAllGamesByUser(String user, String orderBy, String sortedBy);
 
-    GameResponse getUserGamesByPlatform(String user, Platforms platform);
+    List<GameResponse> getUserGamesByPlatform(String user, Platforms platform);
 
     void addAnNewGameFotAnExistingUser(List<Game> newGame, String user);
 
@@ -21,15 +21,15 @@ public interface GameServiceI {
 
     void updateGame(String user, List<UpdateParameters> game);
 
-    GameResponse getAllGamesIsPreOrder(Boolean isPreOrder, String user);
+    List<GameResponse> getAllGamesIsPreOrder(Boolean isPreOrder, String user);
 
-    GameResponse getAllGamesIsCompleted(Boolean isCompleted, String user);
+    List<GameResponse> getAllGamesIsCompleted(Boolean isCompleted, String user);
 
-    GameResponse getAllGamesByGenre(Genre genre, String user);
+    List<GameResponse> getAllGamesByGenre(Genre genre, String user);
 
     void deleteGameFromUser(String user, String gameName);
 
-    Optional<GameResponse> getAllGamesNotReleased(String user);
+    List<GameResponse> getAllGamesNotReleased(String user);
 
-    GameResponse getAllGamesOwned(boolean isOwned, String user);
+    List<GameResponse> getAllGamesOwned(boolean isOwned, String user);
 }

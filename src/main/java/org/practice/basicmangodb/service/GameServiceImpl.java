@@ -46,7 +46,7 @@ public class GameServiceImpl implements GameServiceI {
     }
 
     @Override
-    public GameResponse getUserGamesByPlatform(String user, Platforms platform) {
+    public List<GameResponse> getUserGamesByPlatform(String user, Platforms platform) {
         isUsernamePresent(user);
 
         ArrayList<Game> gameList = new ArrayList<>();
@@ -60,7 +60,7 @@ public class GameServiceImpl implements GameServiceI {
                     .filter(e -> e.getPlatform() == platform)
                     .toList();
 
-            return getGameResponse(user, list, gameList);
+            return List.of(getGameResponse(user, list, gameList));
         } else {
             throw new NoGamesFoundException("");
         }
@@ -101,7 +101,7 @@ public class GameServiceImpl implements GameServiceI {
     }
 
     @Override
-    public GameResponse getAllGamesIsPreOrder(Boolean isPreOrder, String user) {
+    public List<GameResponse> getAllGamesIsPreOrder(Boolean isPreOrder, String user) {
         ArrayList<Game> gameList = new ArrayList<>();
 
         if(gameCollectionRepositoryI.findAllByUser(user).isPresent()){
@@ -113,14 +113,14 @@ public class GameServiceImpl implements GameServiceI {
                     .filter(Game::getIsPreOrder)
                     .toList();
 
-            return getGameResponse(user, list, gameList);
+            return List.of(getGameResponse(user, list, gameList));
         } else {
             throw new NoGamesFoundException("There are no games on pre order.");
         }
     }
 
     @Override
-    public GameResponse getAllGamesIsCompleted(Boolean isCompleted, String user) {
+    public List<GameResponse> getAllGamesIsCompleted(Boolean isCompleted, String user) {
         ArrayList<Game> gameList = new ArrayList<>();
 
         if(findGamesByTheUser(user).isPresent()){
@@ -133,14 +133,14 @@ public class GameServiceImpl implements GameServiceI {
                     .filter(e -> e.getIsCompleted() == isCompleted)
                     .toList();
 
-            return getGameResponse(user, list, gameList);
+            return List.of(getGameResponse(user, list, gameList));
         } else {
             throw new NoGamesFoundException("There are no games are completed");
         }
     }
 
     @Override
-    public GameResponse getAllGamesByGenre(Genre genre, String user) {
+    public List<GameResponse> getAllGamesByGenre(Genre genre, String user) {
         ArrayList<Game> gameList = new ArrayList<>();
 
         if(findGamesByTheUser(user).isPresent()){
@@ -153,7 +153,7 @@ public class GameServiceImpl implements GameServiceI {
                     .filter(e -> e.getGenre() == genre)
                     .toList();
 
-            return getGameResponse(user, list, gameList);
+            return List.of(getGameResponse(user, list, gameList));
         } else {
             throw new NoGamesFoundException("There are no games in selected genre.");
         }
@@ -163,7 +163,7 @@ public class GameServiceImpl implements GameServiceI {
     public void deleteGameFromUser(String user, String gameName){}
 
     @Override
-    public Optional<GameResponse> getAllGamesNotReleased(String user){
+    public List<GameResponse> getAllGamesNotReleased(String user){
         GameResponse gameResponse = null;
 
         if(gameCollectionRepositoryI.findAllByUser(user).isPresent()){
@@ -177,11 +177,11 @@ public class GameServiceImpl implements GameServiceI {
             gameResponse = new GameResponse(user, new ArrayList<>(List.of(gamesToBeReleasedList)));
         }
 
-        return Optional.ofNullable(gameResponse);
+        return List.of(gameResponse);
     }
 
     @Override
-    public GameResponse getAllGamesOwned(boolean isOwned, String user){
+    public List<GameResponse> getAllGamesOwned(boolean isOwned, String user){
         ArrayList<Game> gameList = new ArrayList<>();
 
         if(findGamesByTheUser(user).isPresent()){
@@ -194,9 +194,9 @@ public class GameServiceImpl implements GameServiceI {
                     .filter(e -> e.getIsOwned() == isOwned)
                     .toList();
 
-            return getGameResponse(user, list, gameList);
+            return List.of(getGameResponse(user, list, gameList));
         } else {
-            throw new NoGamesFoundException("There are no games are completed");
+            throw new NoGamesFoundException("There are no games completed");
         }
     }
 

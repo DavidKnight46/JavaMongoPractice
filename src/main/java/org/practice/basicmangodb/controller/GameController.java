@@ -34,7 +34,7 @@ public class GameController {
 
     @GetMapping("/getAllGamesForUserByPlatform")
     @ResponseStatus(HttpStatus.OK)
-    public GameResponse getUserGamesByPlatform(@RequestParam String user,
+    public List<GameResponse> getUserGamesByPlatform(@RequestParam String user,
                                                @RequestParam Platforms platform){
         return gameServiceI.getUserGamesByPlatform(user, platform);
     }
@@ -62,21 +62,21 @@ public class GameController {
 
     @GetMapping("/getAllGamesIsPreOrder")
     @ResponseStatus(HttpStatus.OK)
-    public GameResponse getAllGamesIsPreOrder(@RequestParam Boolean isPreOrder,
+    public List<GameResponse> getAllGamesIsPreOrder(@RequestParam Boolean isPreOrder,
                                               @RequestParam String user){
         return gameServiceI.getAllGamesIsPreOrder(isPreOrder, user);
     }
 
     @GetMapping("/getAllGamesIsCompleted")
     @ResponseStatus(HttpStatus.OK)
-    public GameResponse getAllGamesIsCompleted(@RequestParam Boolean isCompleted,
+    public List<GameResponse> getAllGamesIsCompleted(@RequestParam Boolean isCompleted,
                                                @RequestParam String user){
         return gameServiceI.getAllGamesIsCompleted(isCompleted, user);
     }
 
     @GetMapping("/getAllGamesByGenre")
     @ResponseStatus(HttpStatus.OK)
-    public GameResponse getAllGamesByGenre(@RequestParam Genre genre,
+    public List<GameResponse> getAllGamesByGenre(@RequestParam Genre genre,
                                            @RequestParam String user){
         return gameServiceI.getAllGamesByGenre(genre, user);
     }
@@ -90,13 +90,13 @@ public class GameController {
 
     @GetMapping("/getAllGamesNotReleased")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<GameResponse> getAllGamesNotReleased(@RequestParam String user){
+    public List<GameResponse> getAllGamesNotReleased(@RequestParam String user){
         return gameServiceI.getAllGamesNotReleased(user);
     }
 
     @GetMapping("/getAllGamesUserOwns")
     @ResponseStatus(HttpStatus.OK)
-    public GameResponse getAllGamesOwnedByUser(@RequestParam String user){
+    public List<GameResponse> getAllGamesOwnedByUser(@RequestParam String user){
         return gameServiceI.getAllGamesOwned(true, user);
     }
 }
