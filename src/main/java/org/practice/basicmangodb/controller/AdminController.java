@@ -1,12 +1,12 @@
 package org.practice.basicmangodb.controller;
 
-import jakarta.validation.constraints.NotNull;
 import org.practice.basicmangodb.exceptions.InsufficientPrivilagesException;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
-import java.net.http.HttpRequest;
 import java.util.Objects;
 
 @RestController
