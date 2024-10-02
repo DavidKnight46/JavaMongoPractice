@@ -92,3 +92,7 @@ GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesNotReleased?user
 
 ### Get all games owned
 GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesUserOwns?user=davidknight
+
+### Remove user
+DELETE http://localhost:3000/api/v1/docs/admincontroller/deleteUser?user=yangzhou
+isAdmin: true

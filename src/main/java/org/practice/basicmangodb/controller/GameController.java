@@ -35,7 +35,7 @@ public class GameController {
     @GetMapping("/getAllGamesForUserByPlatform")
     @ResponseStatus(HttpStatus.OK)
     public List<GameResponse> getUserGamesByPlatform(@RequestParam String user,
-                                               @RequestParam Platforms platform){
+                                                     @RequestParam Platforms platform){
         return gameServiceI.getUserGamesByPlatform(user, platform);
     }
 

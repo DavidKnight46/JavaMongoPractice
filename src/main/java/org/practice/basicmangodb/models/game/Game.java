@@ -20,7 +20,6 @@ public class Game {
     private Genre genre;
     private Boolean isCompleted;
     private Boolean isOwned;
-
     public Game(){}
 
     public Game(String name, Platforms platform, Double rating, LocalDate releaseDate, Boolean isPreOrder, Boolean isInterested, Genre genre, Boolean isCompleted, Boolean isOwned){

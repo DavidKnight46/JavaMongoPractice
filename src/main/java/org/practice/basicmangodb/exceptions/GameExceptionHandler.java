@@ -44,4 +44,13 @@ public class GameExceptionHandler extends ResponseEntityExceptionHandler {
                 HttpStatus.NOT_FOUND,
                 request);
     }
+
+    @ExceptionHandler(InsufficientPrivilagesException.class)
+    public ResponseEntity<Object> handleInsufficientPrivilagesException(InsufficientPrivilagesException e, WebRequest request){
+        return handleExceptionInternal(e,
+                e.getMessage(),
+                HttpHeaders.EMPTY,
+                HttpStatus.FORBIDDEN,
+                request);
+    }
 }
