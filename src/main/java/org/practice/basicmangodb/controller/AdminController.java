@@ -1,6 +1,8 @@
 package org.practice.basicmangodb.controller;
 
 import org.practice.basicmangodb.exceptions.InsufficientPrivilagesException;
+import org.practice.basicmangodb.service.admin.AdminService;
+import org.practice.basicmangodb.service.admin.AdminServiceI;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +15,12 @@ import java.util.Objects;
 @RequestMapping("/admincontroller")
 public class AdminController {
 
+    private final AdminService adminService;
+
+    public AdminController(AdminServiceI adminService){
+        this.adminService = adminService;
+    }
+
     @MyValidator
     private WebRequest isAdmin;
 
@@ -21,12 +29,6 @@ public class AdminController {
                            @RequestParam String user){
         this.isAdmin = webRequest;
 
-        if(Objects.requireNonNull(webRequest.getHeader("isAdmin")).contentEquals("true")){
-            System.out.println("smurf3");
-        } else {
-            throw new InsufficientPrivilagesException("");
-        }
-
-        System.out.println("smurf");
+        adminService.deleteUser(webRequest, user);
     }
 }

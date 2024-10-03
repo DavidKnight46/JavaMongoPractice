@@ -5,8 +5,8 @@ import org.practice.basicmangodb.enums.Platforms;
 import org.practice.basicmangodb.models.game.Game;
 import org.practice.basicmangodb.models.game.GameResponse;
 import org.practice.basicmangodb.models.game.UpdateParameters;
-import org.practice.basicmangodb.service.GameServiceI;
-import org.practice.basicmangodb.service.GameServiceImpl;
+import org.practice.basicmangodb.service.user.GameServiceI;
+import org.practice.basicmangodb.service.user.GameServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

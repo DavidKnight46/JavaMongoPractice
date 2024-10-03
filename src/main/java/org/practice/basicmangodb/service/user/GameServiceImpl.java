@@ -1,4 +1,4 @@
-package org.practice.basicmangodb.service;
+package org.practice.basicmangodb.service.user;
 
 import lombok.val;
 import org.practice.basicmangodb.comparators.*;

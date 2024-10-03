@@ -1,4 +1,4 @@
-package org.practice.basicmangodb.service;
+package org.practice.basicmangodb.service.user;
 
 import org.practice.basicmangodb.enums.Genre;
 import org.practice.basicmangodb.enums.Platforms;
