@@ -7,14 +7,15 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Target({ FIELD })
+@Target({ PARAMETER })
 @Retention(RUNTIME)
 @Constraint(validatedBy = HttpHeaderrequestValidator.class)
 @Documented
-public @interface MyValidator {
+public @interface isAdmin {
 
     String message() default "{IpAddress.invalid}";
 
