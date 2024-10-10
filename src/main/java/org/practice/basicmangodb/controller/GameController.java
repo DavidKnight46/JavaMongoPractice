@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/gamecontroller")
-@CrossOrigin(origins = "http://localhost:5173")
 public class GameController {
 
     private final GameServiceI gameServiceI;
@@ -24,6 +23,7 @@ public class GameController {
         this.gameServiceI = mangoDBI;
     }
 
+    @CrossOrigin
     @GetMapping("/getAllGamesForUser")
     @ResponseStatus(HttpStatus.OK)
     private List<GameResponse> getAllGamesByUser(@RequestParam String user,

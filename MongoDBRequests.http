@@ -1,11 +1,11 @@
 ### GET all games for a current user
-GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesForUser?user=davidk&orderBy=ASC
+GET http://localhost:9006/api/v1/docs/gamecontroller/getAllGamesForUser?user=davidk&orderBy=ASC
 
 ### GET all games for a current user by platform
-GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesForUserByPlatform?user=davidknight&platform=PS5
+GET http://localhost:9006/api/v1/docs/gamecontroller/getAllGamesForUserByPlatform?user=davidknight&platform=PS5
 
 ### Create new user with their initial collection
-POST http://localhost:3000/api/v1/docs/gamecontroller/addNewGamesToNewUser?user=user1
+POST http://localhost:9006/api/v1/docs/gamecontroller/addNewGamesToNewUser?user=user1
 content-type: application/json
 
 {
@@ -14,24 +14,37 @@ content-type: application/json
 }
 
 ### Add an new game to existing user
-POST http://localhost:3000/api/v1/docs/gamecontroller/addAnNewGameForAnExistingUser?user=Squall
+POST http://localhost:9006/api/v1/docs/gamecontroller/addAnNewGameForAnExistingUser?user=Squall
 content-type: application/json
 
-[{
-  "name": "Unicorn Overlord",
-  "platform": "PS5",
-  "rating": 5.0,
-  "releaseDate": "2024-03-08",
-  "isPreOrder": false,
-  "isInterested": true,
-  "genre": "RPG",
-  "isCompleted": false,
-  "isOwned": false
-}]
+[
+  {
+    "name": "Final Fantasy VII: Rebirth",
+    "platform": "PS5",
+    "rating": 5.0,
+    "releaseDate": "2024-02-29",
+    "isPreOrder": false,
+    "isInterested": true,
+    "genre": "RPG",
+    "isCompleted": true,
+    "isOwned": true
+  },
+  {
+    "name": "Stellar Blade",
+    "platform": "PS5",
+    "rating": 5.0,
+    "releaseDate": "2024-04-26",
+    "isPreOrder": false,
+    "isInterested": true,
+    "genre": "RPG",
+    "isCompleted": false,
+    "isOwned": true
+  }
+]
 
 
 ### Change parameters for a game
-PUT http://localhost:3000/api/v1/docs/gamecontroller/updateGameInUserCollection?user=davidknight
+PUT http://localhost:9006/api/v1/docs/gamecontroller/updateGameInUserCollection?user=davidknight
 content-type: application/json
 
 [
@@ -73,23 +86,23 @@ content-type: application/json
 ]
 
 ### Get all games that were pre-orders
-GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesIsPreOrder?isPreOrder=true&user=davidknight
+GET http://localhost:9006/api/v1/docs/gamecontroller/getAllGamesIsPreOrder?isPreOrder=true&user=davidknight
 
 ### Get all games that are completed
-GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesIsCompleted?isCompleted=true&user=davidknight
+GET http://localhost:9006/api/v1/docs/gamecontroller/getAllGamesIsCompleted?isCompleted=true&user=davidknight
 
 ### Get all games by genre
-GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesByGenre?genre=J_RPG&user=davidknight
+GET http://localhost:9006/api/v1/docs/gamecontroller/getAllGamesByGenre?genre=J_RPG&user=davidknight
 
 ### Get all games by genre
-GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesByGenre?genre=J_RPG&user=davidknight
+GET http://localhost:9006/api/v1/docs/gamecontroller/getAllGamesByGenre?genre=J_RPG&user=davidknight
 
 ### Get all games not released
-GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesNotReleased?user=davidknight
+GET http://localhost:9006/api/v1/docs/gamecontroller/getAllGamesNotReleased?user=davidknight
 
 ### Get all games owned
-GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesUserOwns?user=davidknight
+GET http://localhost:9006/api/v1/docs/gamecontroller/getAllGamesUserOwns?user=davidknight
 
 ### Remove user
-DELETE http://localhost:3000/api/v1/docs/admincontroller/deleteUser?user=yangzhou
+DELETE http://localhost:9006/api/v1/docs/admincontroller/deleteUser?user=yangzhou
 isAdmin: false
