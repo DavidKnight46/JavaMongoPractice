@@ -81,8 +81,8 @@ public class GameServiceImpl implements GameServiceI {
     public void addAnNewGameFotAnExistingUser(List<Game> newGame, String user){
         isUsernamePresent(user);
 
-        if(gameCollectionRepositoryI.findAllByUser(user).isPresent()){
-            GameDocument gameDocument = gameCollectionRepositoryI.findAllByUser(user).get().get(0);
+        if(gameCollectionRepositoryI.findAllByUser_Alias(user).isPresent()){
+            GameDocument gameDocument = gameCollectionRepositoryI.findAllByUser_Alias(user).get().get(0);
 
             for(Game game : newGame){
                 if(gameDocument.getGame().contains(game)){
@@ -108,8 +108,8 @@ public class GameServiceImpl implements GameServiceI {
     public List<GameResponse> getAllGamesIsPreOrder(Boolean isPreOrder, String user) {
         ArrayList<Game> gameList = new ArrayList<>();
 
-        if(gameCollectionRepositoryI.findAllByUser(user).isPresent()){
-            List<Game> list = gameCollectionRepositoryI.findAllByUser(user)
+        if(gameCollectionRepositoryI.findAllByUser_Alias(user).isPresent()){
+            List<Game> list = gameCollectionRepositoryI.findAllByUser_Alias(user)
                     .get()
                     .get(0)
                     .getGame()
@@ -170,8 +170,8 @@ public class GameServiceImpl implements GameServiceI {
     public List<GameResponse> getAllGamesNotReleased(String user){
         GameResponse gameResponse = null;
 
-        if(gameCollectionRepositoryI.findAllByUser(user).isPresent()){
-            ArrayList<Game> listOfGamesForUser = gameCollectionRepositoryI.findAllByUser(user).get().get(0).getGame();
+        if(gameCollectionRepositoryI.findAllByUser_Alias(user).isPresent()){
+            ArrayList<Game> listOfGamesForUser = gameCollectionRepositoryI.findAllByUser_Alias(user).get().get(0).getGame();
 
             var gamesToBeReleasedList = listOfGamesForUser
                     .stream()
@@ -273,11 +273,11 @@ public class GameServiceImpl implements GameServiceI {
     }
 
     private Optional<ArrayList<GameDocument>> findGamesByTheUser(String user){
-        return gameCollectionRepositoryI.findAllByUser(user);
+        return gameCollectionRepositoryI.findAllByUser_Alias(user);
     }
 
     private void isUsernamePresent(String userName) throws NoUserFoundException {
-        if(!gameCollectionRepositoryI.existsByUser(userName)){
+        if(!gameCollectionRepositoryI.existsByUser_Alias(userName)){
             throw new NoUserFoundException(String.format("%s is not registered", userName));
         }
     }

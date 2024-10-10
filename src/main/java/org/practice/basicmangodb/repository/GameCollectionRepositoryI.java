@@ -15,12 +15,12 @@ import java.util.Optional;
 @Repository
 public interface GameCollectionRepositoryI extends MongoRepository<GameDocument, String> {
 
-    Optional<ArrayList<GameDocument>> findAllByUser(String user);
+    Optional<ArrayList<GameDocument>> findAllByUser_Alias(String user);
 
     @Query("{$and:[{ \"game.platform\": ?0 }, {user: ?1}]}")
     Optional<List<GameDocument>> findByPlatformAndUser(Platforms platform, String user);
 
-    boolean existsByUser(String username);
+    boolean existsByUser_Alias(String username);
 
     @Query("{$and:[{ \"game.isPreOrder\": ?0 }, {user: ?1}]}")
     List<GameDocument> findByIsPreOrder(Boolean isPreOrder, String user);
