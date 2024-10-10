@@ -1,4 +1,4 @@
-package org.practice.basicmangodb.controller;
+package org.practice.basicmangodb.annotations;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

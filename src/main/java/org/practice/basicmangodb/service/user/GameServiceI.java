@@ -2,6 +2,7 @@ package org.practice.basicmangodb.service.user;
 
 import org.practice.basicmangodb.enums.Genre;
 import org.practice.basicmangodb.enums.Platforms;
+import org.practice.basicmangodb.models.UserCollection;
 import org.practice.basicmangodb.models.game.Game;
 import org.practice.basicmangodb.models.game.GameResponse;
 import org.practice.basicmangodb.models.game.UpdateParameters;
@@ -16,7 +17,7 @@ public interface GameServiceI {
 
     void addAnNewGameFotAnExistingUser(List<Game> newGame, String user);
 
-    void addGamesToUserNewCollection(List<Game> newGames, String user);
+    void addGamesToUserNewCollection(UserCollection userCollection);
 
     void updateGame(String user, List<UpdateParameters> game);
 

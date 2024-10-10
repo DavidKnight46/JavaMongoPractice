@@ -1,20 +1,17 @@
 ### GET all games for a current user
-GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesForUser?user=davidknight&orderBy=ASC
+GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesForUser?user=davidk&orderBy=ASC
 
 ### GET all games for a current user by platform
 GET http://localhost:3000/api/v1/docs/gamecontroller/getAllGamesForUserByPlatform?user=davidknight&platform=PS5
 
 ### Create new user with their initial collection
-POST http://localhost:3000/api/v1/docs/gamecontroller/addNewGamesToNewUser?user=davidknight
+POST http://localhost:3000/api/v1/docs/gamecontroller/addNewGamesToNewUser?user=user1
 content-type: application/json
 
-[
-    {"name": "Final Fantasy 16", "platform": "PS5", "rating": 5.0,"releaseDate": "2023-06-22", "isPreOrder": true, "isInterested": false, "genre": "J_RPG", "isCompleted": true},
-    {"name": "Final Fantasy 7: Rebirth", "platform": "PS5", "rating": 5.0,"releaseDate": "2024-02-29", "isPreOrder": true, "isInterested": false, "genre": "J_RPG", "isCompleted": true},
-    {"name": "Stellar Blade", "platform": "PS5", "rating": 4.5,"releaseDate": "2024-04-26", "isPreOrder": false, "isInterested": false, "genre": "A_RPG", "isCompleted": false},
-    {"name": "Ys VIII: Lacrimosa of Dana", "platform": "PSVITA", "rating": 4,"releaseDate": "2016-07-21", "isPreOrder": false, "isInterested": false, "genre": "A_RPG", "isCompleted": false},
-    {"name": "Nier: Automata", "platform": "PS4", "rating": 5.0,"releaseDate": "2017-02-23", "isPreOrder": false, "isInterested": false, "genre": "A_RPG", "isCompleted": false}
-]
+{
+  "user": {"username": "davidk","alias": "Squall", "email": "davidknight46@hotmail.com", "isAdmin": true},
+  "newGame": [{"name": "Final Fantasy 16", "platform": "PS5", "rating": 5.0,"releaseDate": "2023-06-22", "isPreOrder": true, "isInterested": false, "genre": "J_RPG", "isCompleted": true}]
+}
 
 ### Add an new game to existing user
 POST http://localhost:3000/api/v1/docs/gamecontroller/addAnNewGameForAnExistingUser?user=davidknight
