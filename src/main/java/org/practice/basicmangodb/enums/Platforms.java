@@ -1,6 +1,7 @@
 package org.practice.basicmangodb.enums;
 
 public enum Platforms {
+    PS5Pro,
     PS5,
     PS4,
     PS3,
