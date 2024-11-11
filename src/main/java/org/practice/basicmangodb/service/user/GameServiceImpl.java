@@ -17,6 +17,7 @@ import org.practice.basicmangodb.repository.GameCollectionRepositoryI;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -175,7 +176,7 @@ public class GameServiceImpl implements GameServiceI {
 
             var gamesToBeReleasedList = listOfGamesForUser
                     .stream()
-                    .filter(e -> e.getReleaseDate().isAfter(LocalDate.now()))
+                    .filter(e -> e.getReleaseDate().isAfter(LocalDateTime.now()))
                     .toArray(Game[]::new);
 
             User byUserUsername = gameCollectionRepositoryI.findByUser_Alias(user);
@@ -277,7 +278,9 @@ public class GameServiceImpl implements GameServiceI {
     }
 
     private void isUsernamePresent(String userName) throws NoUserFoundException {
-        if(!gameCollectionRepositoryI.existsByUser_Alias(userName)){
+        Optional<GameDocument> b = gameCollectionRepositoryI.existsByUser_Alias(userName);
+
+        if(!b.isPresent()){
             throw new NoUserFoundException(String.format("%s is not registered", userName));
         }
     }
@@ -306,7 +309,7 @@ public class GameServiceImpl implements GameServiceI {
             } else if (updateParameters.keyToUpdate().contentEquals(RATING)) {
                 game.setRating((Double) updateParameters.newValue());
             } else if (updateParameters.keyToUpdate().contentEquals("releaseDate")) {
-                game.setReleaseDate(LocalDate.parse((String) updateParameters.newValue()));
+                game.setReleaseDate(LocalDateTime.parse((String) updateParameters.newValue()));
             } else if (updateParameters.keyToUpdate().contentEquals("isPreOrder")){
                 game.setIsPreOrder((Boolean) updateParameters.newValue());
             } else if(updateParameters.keyToUpdate().contentEquals("isInterested")) {

@@ -6,6 +6,7 @@ import org.practice.basicmangodb.enums.Genre;
 import org.practice.basicmangodb.enums.Platforms;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class Game {
@@ -13,8 +14,8 @@ public class Game {
     private String name;
     private Platforms platform;
     private Double rating;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate releaseDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime releaseDate;
     private Boolean isPreOrder;
     private Boolean isInterested;
     private Genre genre;
@@ -22,7 +23,7 @@ public class Game {
     private Boolean isOwned;
     public Game(){}
 
-    public Game(String name, Platforms platform, Double rating, LocalDate releaseDate, Boolean isPreOrder, Boolean isInterested, Genre genre, Boolean isCompleted, Boolean isOwned){
+    public Game(String name, Platforms platform, Double rating, LocalDateTime releaseDate, Boolean isPreOrder, Boolean isInterested, Genre genre, Boolean isCompleted, Boolean isOwned){
         this.name = name;
         this.platform = platform;
         this.rating = rating;

@@ -19,26 +19,37 @@ content-type: application/json
 
 [
   {
-    "name": "Final Fantasy VII: Rebirth",
+    "name": "Black Myth WuKong",
     "platform": "PS5",
     "rating": 5.0,
-    "releaseDate": "2024-02-29",
+    "releaseDate": "2024-08-20 00:00:00",
     "isPreOrder": false,
     "isInterested": true,
-    "genre": "RPG",
-    "isCompleted": true,
-    "isOwned": true
+    "genre": "ActionAdventure",
+    "isCompleted": false,
+    "isOwned": false
   },
   {
-    "name": "Stellar Blade",
+    "name": "Space Marine 2",
     "platform": "PS5",
     "rating": 5.0,
-    "releaseDate": "2024-04-26",
+    "releaseDate": "2024-09-09 00:00:00",
     "isPreOrder": false,
     "isInterested": true,
-    "genre": "RPG",
+    "genre": "ActionAdventure",
     "isCompleted": false,
-    "isOwned": true
+    "isOwned": false
+  },
+  {
+    "name": "AstroBot",
+    "platform": "PS5",
+    "rating": 5.0,
+    "releaseDate": "2024-09-06 00:00:00",
+    "isPreOrder": false,
+    "isInterested": true,
+    "genre": "PLATFORMER",
+    "isCompleted": false,
+    "isOwned": false
   }
 ]
 

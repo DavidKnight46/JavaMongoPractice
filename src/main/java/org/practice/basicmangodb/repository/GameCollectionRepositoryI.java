@@ -2,7 +2,6 @@ package org.practice.basicmangodb.repository;
 
 import org.practice.basicmangodb.enums.Platforms;
 import org.practice.basicmangodb.models.game.GameDocument;
-import org.practice.basicmangodb.models.game.GameResponse;
 import org.practice.basicmangodb.models.user.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
@@ -20,7 +19,8 @@ public interface GameCollectionRepositoryI extends MongoRepository<GameDocument,
     @Query("{$and:[{ \"game.platform\": ?0 }, {user: ?1}]}")
     Optional<List<GameDocument>> findByPlatformAndUser(Platforms platform, String user);
 
-    boolean existsByUser_Alias(String username);
+    @Query("{\"user.alias\":?0}")
+    Optional<GameDocument> existsByUser_Alias(String alias);
 
     @Query("{$and:[{ \"game.isPreOrder\": ?0 }, {user: ?1}]}")
     List<GameDocument> findByIsPreOrder(Boolean isPreOrder, String user);

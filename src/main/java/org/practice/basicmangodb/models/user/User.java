@@ -1,6 +1,5 @@
 package org.practice.basicmangodb.models.user;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
