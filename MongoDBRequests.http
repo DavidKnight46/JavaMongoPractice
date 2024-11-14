@@ -19,37 +19,16 @@ content-type: application/json
 
 [
   {
-    "name": "Black Myth WuKong",
+    "name": "Horizon: Forbidden West",
     "platform": "PS5",
     "rating": 5.0,
-    "releaseDate": "2024-08-20 00:00:00",
+    "releaseDate": "2022-02-18 00:00:00",
     "isPreOrder": false,
     "isInterested": true,
-    "genre": "ActionAdventure",
-    "isCompleted": false,
-    "isOwned": false
-  },
-  {
-    "name": "Space Marine 2",
-    "platform": "PS5",
-    "rating": 5.0,
-    "releaseDate": "2024-09-09 00:00:00",
-    "isPreOrder": false,
-    "isInterested": true,
-    "genre": "ActionAdventure",
-    "isCompleted": false,
-    "isOwned": false
-  },
-  {
-    "name": "AstroBot",
-    "platform": "PS5",
-    "rating": 5.0,
-    "releaseDate": "2024-09-06 00:00:00",
-    "isPreOrder": false,
-    "isInterested": true,
-    "genre": "PLATFORMER",
-    "isCompleted": false,
-    "isOwned": false
+    "genre": "A_RPG",
+    "isCompleted": true,
+    "isOwned": true,
+    "dlcs": [{"dlcName":"The Burning Shores", "releaseDate": "2023-04-19", "rating": 50.0}]
   }
 ]
 
@@ -124,7 +103,7 @@ content-type: application/json
 
 {
   "gameName": "Final Fantasy 16",
-  "dlcName": "The Rising Tide",
-  "releaseDate": "2024-04-18",
+  "dlcName": "Echoes of the Fallen",
+  "releaseDate": "2023-12-11",
   "rating": 5.0
 }
