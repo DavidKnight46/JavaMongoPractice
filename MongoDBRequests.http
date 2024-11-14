@@ -117,3 +117,14 @@ GET http://localhost:9006/api/v1/docs/gamecontroller/getAllGamesUserOwns?user=da
 ### Remove user
 DELETE http://localhost:9006/api/v1/docs/admincontroller/deleteUser?user=yangzhou
 isAdmin: false
+
+### Add DLC
+POST http://localhost:9006/api/v1/docs/dlccontroller/addAnDLC?user=davidk
+content-type: application/json
+
+{
+  "gameName": "Final Fantasy 16",
+  "dlcName": "The Rising Tide",
+  "releaseDate": "2024-04-18",
+  "rating": 5.0
+}

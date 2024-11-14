@@ -7,6 +7,7 @@ import org.practice.basicmangodb.enums.Platforms;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Data
 public class Game {
@@ -21,9 +22,10 @@ public class Game {
     private Genre genre;
     private Boolean isCompleted;
     private Boolean isOwned;
+    private ArrayList<DLC> dlcs;
     public Game(){}
 
-    public Game(String name, Platforms platform, Double rating, LocalDateTime releaseDate, Boolean isPreOrder, Boolean isInterested, Genre genre, Boolean isCompleted, Boolean isOwned){
+    public Game(String name, Platforms platform, Double rating, LocalDateTime releaseDate, Boolean isPreOrder, Boolean isInterested, Genre genre, Boolean isCompleted, Boolean isOwned, ArrayList<DLC> dlcs){
         this.name = name;
         this.platform = platform;
         this.rating = rating;
@@ -33,6 +35,7 @@ public class Game {
         this.genre = genre;
         this.isCompleted = isCompleted;
         this.isOwned = isOwned;
+        this.dlcs = dlcs;
     }
 
 }
