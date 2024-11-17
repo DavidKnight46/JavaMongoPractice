@@ -6,6 +6,9 @@ import org.practice.basicmangodb.service.dlcservice.DLCServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.List;
+
 @RestController
 @RequestMapping("dlccontroller")
 public class DLCController {
@@ -17,8 +20,16 @@ public class DLCController {
     }
 
     @PostMapping("/addAnDLC")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public void addDLC(@RequestBody DlcDTO dlc, @RequestParam String user){
         dlcService.addAnDLC(dlc, user);
+    }
+
+    @GetMapping("/getDLCForGame")
+    @ResponseStatus(HttpStatus.OK)
+    public List<DlcDTO> getAnGameDLC(@RequestParam String user,
+                                     @RequestParam String game){
+
+        return dlcService.getAnGameDLC(user, game);
     }
 }

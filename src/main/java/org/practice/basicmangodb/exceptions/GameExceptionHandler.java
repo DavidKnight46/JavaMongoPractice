@@ -15,11 +15,7 @@ public class GameExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NoGamesFoundException.class)
     public ResponseEntity<Object> handleNoGamesFoundException(NoGamesFoundException e, WebRequest request){
-        return handleExceptionInternal(e,
-                e.getMessage(),
-                HttpHeaders.EMPTY,
-                HttpStatus.NOT_FOUND,
-                request);
+        return createResponse(e, request);
     }
 
     @ExceptionHandler(NoSuchElementException.class)
@@ -29,24 +25,20 @@ public class GameExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UnableToAddGameException.class)
     public ResponseEntity<Object> handleUnableToAddGameException(UnableToAddGameException e, WebRequest request){
-        return handleExceptionInternal(e,
-                e.getMessage(),
-                HttpHeaders.EMPTY,
-                HttpStatus.INTERNAL_SERVER_ERROR,
-                request);
+        return createResponse(e, request);
     }
 
     @ExceptionHandler(NoUserFoundException.class)
     public ResponseEntity<Object> handleNoUserFoundExceptionException(NoUserFoundException e, WebRequest request){
-        return handleExceptionInternal(e,
-                e.getMessage(),
-                HttpHeaders.EMPTY,
-                HttpStatus.NOT_FOUND,
-                request);
+        return createResponse(e, request);
     }
 
     @ExceptionHandler(InsufficientPrivilagesException.class)
     public ResponseEntity<Object> handleInsufficientPrivilagesException(InsufficientPrivilagesException e, WebRequest request){
+        return createResponse(e, request);
+    }
+
+    private ResponseEntity<Object> createResponse(Exception e, WebRequest request) {
         return handleExceptionInternal(e,
                 e.getMessage(),
                 HttpHeaders.EMPTY,

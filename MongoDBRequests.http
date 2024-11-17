@@ -19,16 +19,16 @@ content-type: application/json
 
 [
   {
-    "name": "Horizon: Forbidden West",
+    "name": "Tales of Arise",
     "platform": "PS5",
     "rating": 5.0,
-    "releaseDate": "2022-02-18 00:00:00",
+    "releaseDate": "2021-09-10 00:00:00",
     "isPreOrder": false,
     "isInterested": true,
-    "genre": "A_RPG",
+    "genre": "J_RPG",
     "isCompleted": true,
     "isOwned": true,
-    "dlcs": [{"dlcName":"The Burning Shores", "releaseDate": "2023-04-19", "rating": 50.0}]
+    "dlcs": [{"dlcName":"Beyond the Dawn", "releaseDate": "2023-09-11", "rating": 4.5}]
   }
 ]
 
@@ -107,3 +107,6 @@ content-type: application/json
   "releaseDate": "2023-12-11",
   "rating": 5.0
 }
+
+### Get Game DLC
+GET http://localhost:9006/api/v1/docs/dlccontroller/getDLCForGame?user=davidk&game=Final Fantasy 16

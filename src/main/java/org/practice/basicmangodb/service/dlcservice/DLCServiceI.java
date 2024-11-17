@@ -8,4 +8,6 @@ public interface DLCServiceI {
     void addAnDLC(DlcDTO dlc, String user);
 
     void addAllDLCs(List<DlcDTO> dlcs, String user);
+
+    List<DlcDTO> getAnGameDLC(String user, String game);
 }
