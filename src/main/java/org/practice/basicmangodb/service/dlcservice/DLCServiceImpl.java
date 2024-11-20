@@ -1,7 +1,5 @@
 package org.practice.basicmangodb.service.dlcservice;
 
-import lombok.val;
-import org.practice.basicmangodb.exceptions.InsufficientPrivilagesException;
 import org.practice.basicmangodb.exceptions.NoDLCFoundException;
 import org.practice.basicmangodb.exceptions.NoGamesFoundException;
 import org.practice.basicmangodb.models.dto.DlcDTO;
@@ -73,12 +71,15 @@ public class DLCServiceImpl implements DLCServiceI{
         return dlcList;
     }
 
-    private static Optional<Game> getGame(String game, GameDocument doc) {
-        ArrayList<Game> gamesDLC = doc.getGame();
-
-        return gamesDLC.stream()
+    private Optional<Game> getGame(String game, GameDocument doc) {
+        return doc.getGame()
+                .stream()
                 .filter(e -> e.getName().contentEquals(game))
                 .findFirst();
+
+//        return gamesDLC.stream()
+//                .filter(e -> e.getName().contentEquals(game))
+//                .findFirst();
     }
 
     private DlcDTO createDLcDTO(DLC dlc, String gameName){

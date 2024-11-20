@@ -6,11 +6,11 @@ import org.practice.basicmangodb.service.dlcservice.DLCServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
 @RequestMapping("dlccontroller")
+@CrossOrigin(origins = "http://localhost:5173")
 public class DLCController {
 
     private final DLCServiceI dlcService;

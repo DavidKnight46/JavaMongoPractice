@@ -25,7 +25,7 @@ public interface GameServiceI {
 
     List<GameResponse> getAllGamesIsCompleted(Boolean isCompleted, String user);
 
-    List<GameResponse> getAllGamesByGenre(Genre genre, String user);
+    GameResponse getAllGamesByGenre(Genre genre, String user);
 
     void deleteGameFromUser(String user, String gameName);
 

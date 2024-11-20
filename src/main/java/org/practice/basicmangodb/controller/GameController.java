@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/gamecontroller")
+@CrossOrigin(origins = "http://localhost:5173")
 public class GameController {
 
     private final GameServiceI gameServiceI;
@@ -62,21 +63,21 @@ public class GameController {
     @GetMapping("/getAllGamesIsPreOrder")
     @ResponseStatus(HttpStatus.OK)
     public List<GameResponse> getAllGamesIsPreOrder(@RequestParam Boolean isPreOrder,
-                                              @RequestParam String user){
+                                                    @RequestParam String user){
         return gameServiceI.getAllGamesIsPreOrder(isPreOrder, user);
     }
 
     @GetMapping("/getAllGamesIsCompleted")
     @ResponseStatus(HttpStatus.OK)
     public List<GameResponse> getAllGamesIsCompleted(@RequestParam Boolean isCompleted,
-                                               @RequestParam String user){
+                                                     @RequestParam String user){
         return gameServiceI.getAllGamesIsCompleted(isCompleted, user);
     }
 
     @GetMapping("/getAllGamesByGenre")
     @ResponseStatus(HttpStatus.OK)
-    public List<GameResponse> getAllGamesByGenre(@RequestParam Genre genre,
-                                           @RequestParam String user){
+    public GameResponse getAllGamesByGenre(@RequestParam Genre genre,
+                                                 @RequestParam String user){
         return gameServiceI.getAllGamesByGenre(genre, user);
     }
 

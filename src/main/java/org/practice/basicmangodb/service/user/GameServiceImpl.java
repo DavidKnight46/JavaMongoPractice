@@ -16,7 +16,6 @@ import org.practice.basicmangodb.models.user.User;
 import org.practice.basicmangodb.repository.GameCollectionRepositoryI;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -145,20 +144,22 @@ public class GameServiceImpl implements GameServiceI {
     }
 
     @Override
-    public List<GameResponse> getAllGamesByGenre(Genre genre, String user) {
-        ArrayList<Game> gameList = new ArrayList<>();
+    public GameResponse getAllGamesByGenre(Genre genre, String user) {
+        if(gameCollectionRepositoryI.findGameDocumentByUserUsername(user)
+                .isPresent()){
 
-        if(findGamesByTheUser(user).isPresent()){
-            List<Game> list = findGamesByTheUser(user)
+            List<Game> listOfGamesByGenre = gameCollectionRepositoryI
+                    .findGameDocumentByUserUsername(user)
                     .get()
+                    .stream()
+                    .toList()
                     .get(0)
                     .getGame()
                     .stream()
-                    .sorted(new ReleaseDateComparatorAsc())
                     .filter(e -> e.getGenre() == genre)
                     .toList();
 
-            return List.of(getGameResponse(user, list, gameList));
+            return new GameResponse(user, listOfGamesByGenre, false);
         } else {
             throw new NoGamesFoundException("There are no games in selected genre.");
         }
