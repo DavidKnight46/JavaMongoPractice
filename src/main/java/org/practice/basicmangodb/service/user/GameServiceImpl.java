@@ -127,13 +127,15 @@ public class GameServiceImpl implements GameServiceI {
     public List<GameResponse> getAllGamesIsCompleted(Boolean isCompleted, String user) {
         ArrayList<Game> gameList = new ArrayList<>();
 
-        if(findGamesByTheUser(user).isPresent()){
-            List<Game> list = findGamesByTheUser(user)
+        if(gameCollectionRepositoryI.findGameDocumentByUserUsername(user).isPresent()){
+            List<Game> list = gameCollectionRepositoryI
+                    .findGameDocumentByUserUsername(user)
                     .get()
+                    .stream()
+                    .toList()
                     .get(0)
                     .getGame()
                     .stream()
-                    .sorted(new ReleaseDateComparatorDsc())
                     .filter(e -> e.getIsCompleted() == isCompleted)
                     .toList();
 
@@ -214,7 +216,6 @@ public class GameServiceImpl implements GameServiceI {
                     .stream()
                     .sorted(new RatingComparatorDsc())
                     .sorted(new ReleaseDateComparatorAsc())
-                    //.sorted(new PlatformComparator())
                     .toList();
 
             return getGameResponse(document.getUser().getAlias(), list, new ArrayList<>());
@@ -223,14 +224,12 @@ public class GameServiceImpl implements GameServiceI {
                     .stream()
                     .sorted(new RatingComparatorAsc())
                     .sorted(new ReleaseDateComparatorAsc())
-                    //.sorted(new PlatformComparator())
                     .toList();
 
             return getGameResponse(document.getUser().getAlias(), list, new ArrayList<>());
         } else if(orderBy.contentEquals("DESC") && sortedBy.contentEquals("PLATORM")){
             val list = document.getGame()
                     .stream()
-                    //.sorted(new RatingComparatorDsc())
                     .sorted(new PlatformComparatorAsc())
                     .sorted(new ReleaseDateComparatorAsc())
                     .toList();
@@ -239,7 +238,6 @@ public class GameServiceImpl implements GameServiceI {
         } else if(orderBy.contentEquals("ASC") && sortedBy.contentEquals("PLATORM")){
             val list = document.getGame()
                     .stream()
-                    //.sorted(new RatingComparatorAsc())
                     .sorted(new PlatformComparatorDsc())
                     .sorted(new ReleaseDateComparatorAsc())
                     .toList();
@@ -284,16 +282,6 @@ public class GameServiceImpl implements GameServiceI {
         if(!b.isPresent()){
             throw new NoUserFoundException(String.format("%s is not registered", userName));
         }
-    }
-
-    private void isSameGameOnSamePlatform(ArrayList<Game> list, Game newGame, String user){
-        if(list.stream().anyMatch(e -> e.getName().contentEquals(newGame.getName()) &&
-                e.getPlatform().toString().contentEquals(newGame.getPlatform().name()))){
-           throw new UnableToAddGameException(String.format("%s on %s already found for user %s.",
-                   newGame.getName(),
-                   newGame.getPlatform(),
-                   user));
-        };
     }
 
     private void processUpdateParameters(UpdateParameters updateParameters){

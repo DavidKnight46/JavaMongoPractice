@@ -21,7 +21,8 @@ public class DLCController {
 
     @PostMapping("/addAnDLC")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addDLC(@RequestBody DlcDTO dlc, @RequestParam String user){
+    public void addDLC(@RequestBody DlcDTO dlc,
+                       @RequestParam String user){
         dlcService.addAnDLC(dlc, user);
     }
 
