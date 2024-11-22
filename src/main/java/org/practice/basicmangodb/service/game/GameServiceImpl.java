@@ -43,7 +43,7 @@ public class GameServiceImpl implements GameServiceI {
                     .filter(e -> e.getName().contains(gameTitle))
                     .toList();
         } else {
-            throw new NoGamesFoundException("There are no games containing title: " + gameTitle);
+            throw new NoGamesFoundException("There are no game titles containing: " + gameTitle);
         }
     }
 
@@ -57,7 +57,7 @@ public class GameServiceImpl implements GameServiceI {
                     .findFirst()
                     .get();
         } else {
-            throw new NoGamesFoundException("There are no games containing title: " + gameTitle);
+            throw new NoGamesFoundException("There is no game title containing: " + gameTitle);
         }
     }
 
