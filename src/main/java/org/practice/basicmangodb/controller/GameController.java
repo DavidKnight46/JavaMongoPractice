@@ -24,6 +24,13 @@ public class GameController {
         this.gameService = gameService;
     }
 
+    @GetMapping("/findAnGameContainingForUser")
+    @ResponseStatus(HttpStatus.OK)
+    public List<GameDocumentDTO> findAnGameContainingForUser(@RequestParam String user,
+                                             @RequestParam String gameString){
+        return gameService.findAnGameContainingForUser(gameString,user);
+    }
+
     @GetMapping("/getAnGame")
     @ResponseStatus(HttpStatus.OK)
     public GameDocumentDTO getAnSpecificGame(@RequestParam String user,

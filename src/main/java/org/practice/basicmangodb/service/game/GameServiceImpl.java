@@ -35,6 +35,19 @@ public class GameServiceImpl implements GameServiceI {
     }
 
     @Override
+    public List<GameDocumentDTO> findAnGameContainingForUser(String gameTitle, String user) {
+        if(gameCollectionRepositoryI.findGameDocumentByUserUsername(user)
+                .isPresent())
+        {
+            return getGameStream(user)
+                    .filter(e -> e.getName().contains(gameTitle))
+                    .toList();
+        } else {
+            throw new NoGamesFoundException("There are no games containing title: " + gameTitle);
+        }
+    }
+
+    @Override
     public GameDocumentDTO getAnGame(String gameTitle, String user) {
         if(gameCollectionRepositoryI.findGameDocumentByUserUsername(user)
                 .isPresent())

@@ -11,6 +11,8 @@ import java.util.List;
 
 public interface GameServiceI {
 
+    List<GameDocumentDTO> findAnGameContainingForUser(String gameTitle, String user);
+
     GameDocumentDTO getAnGame(String gameTitle, String user);
 
     List<GameResponseDTO> getAllGamesByUser(String user, String orderBy, String sortedBy);

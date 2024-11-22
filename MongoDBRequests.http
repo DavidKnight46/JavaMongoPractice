@@ -19,61 +19,13 @@ content-type: application/json
 
 [
   {
-    "name": "Final Fantasy: Pixel Remasters",
+    "name": "Final Fantasy VIII: Remastered",
     "platform": "PS4",
-    "rating": 5.0,
-    "releaseDate": "2023-04-19 00:00:00",
+    "rating": 4.0,
+    "releaseDate": "2019-09-03 00:00:00",
     "isPreOrder": false,
     "isInterested": true,
     "genre": "J_RPG",
-    "isCompleted": false,
-    "isOwned": true,
-    "dlcs": null
-  },
-  {
-    "name": "Final Fantasy VII: Crisis Core Reunion",
-    "platform": "PS5",
-    "rating": 5.0,
-    "releaseDate": "2022-12-13 00:00:00",
-    "isPreOrder": false,
-    "isInterested": true,
-    "genre": "J_RPG",
-    "isCompleted": false,
-    "isOwned": true,
-    "dlcs": null
-  },
-  {
-    "name": "Final Fantasy X: HD Remaster",
-    "platform": "PSVITA",
-    "rating": 5.0,
-    "releaseDate": "2013-12-26 00:00:00",
-    "isPreOrder": false,
-    "isInterested": true,
-    "genre": "J_RPG",
-    "isCompleted": false,
-    "isOwned": true,
-    "dlcs": null
-  },
-  {
-    "name": "Final Fantasy XV",
-    "platform": "PS4",
-    "rating": 5.0,
-    "releaseDate": "2016-11-29 00:00:00",
-    "isPreOrder": false,
-    "isInterested": true,
-    "genre": "J_RPG",
-    "isCompleted": false,
-    "isOwned": true,
-    "dlcs": null
-  },
-  {
-    "name": "Final Fantasy XIV",
-    "platform": "PS5",
-    "rating": 5.0,
-    "releaseDate": "2013-08-27 00:00:00",
-    "isPreOrder": false,
-    "isInterested": true,
-    "genre": "MMORPG",
     "isCompleted": false,
     "isOwned": true,
     "dlcs": null
@@ -155,3 +107,6 @@ GET http://localhost:9006/api/v1/docs/dlccontroller/getDLCForGame?user=davidk&ga
 
 ### Get An specific game
 GET http://localhost:9006/api/v1/docs/gamecontroller/getAnGame?user=davidk&gameString=Final
+
+### Get List containing
+GET http://localhost:9006/api/v1/docs/gamecontroller/findAnGameContainingForUser?user=davidk&gameString=Final
