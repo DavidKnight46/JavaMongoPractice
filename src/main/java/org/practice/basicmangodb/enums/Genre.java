@@ -11,5 +11,6 @@ public enum Genre {
     STRATEGY,
     PLATFORMER,
     METROVANIA,
-    RACING
+    RACING,
+    MMORPG
 }

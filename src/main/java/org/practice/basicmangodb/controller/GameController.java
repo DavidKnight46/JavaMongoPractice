@@ -18,67 +18,73 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:5173")
 public class GameController {
 
-    private final GameServiceI gameServiceI;
+    private final GameServiceI gameService;
 
-    public GameController(GameServiceImpl mangoDBI){
-        this.gameServiceI = mangoDBI;
+    public GameController(GameServiceImpl gameService){
+        this.gameService = gameService;
     }
 
-    @CrossOrigin
+    @GetMapping("/getAnGame")
+    @ResponseStatus(HttpStatus.OK)
+    public GameDocumentDTO getAnSpecificGame(@RequestParam String user,
+                                             @RequestParam String gameString){
+        return gameService.getAnGame(gameString,user);
+    }
+
     @GetMapping("/getAllGamesForUser")
     @ResponseStatus(HttpStatus.OK)
-    private List<GameResponseDTO> getAllGamesByUser(@RequestParam String user,
+    public List<GameResponseDTO> getAllGamesByUser(@RequestParam String user,
                                                     @RequestParam(defaultValue = "ASC") String orderBy,
                                                     @RequestParam(defaultValue = "RATING") String sortedBy){
-        return gameServiceI.getAllGamesByUser(user, orderBy, sortedBy);
+        return gameService.getAllGamesByUser(user, orderBy, sortedBy);
     }
 
     @GetMapping("/getAllGamesForUserByPlatform")
     @ResponseStatus(HttpStatus.OK)
     public List<GameResponseDTO> getUserGamesByPlatform(@RequestParam String user,
                                                         @RequestParam Platforms platform){
-        return gameServiceI.getUserGamesByPlatform(user, platform);
+        return gameService.getUserGamesByPlatform(user, platform);
     }
 
     @PostMapping("/addNewGamesToNewUser")
     @ResponseStatus(HttpStatus.CREATED)
     public void addGamesToUserNewCollection(@RequestBody UserCollection userCollection){
-        gameServiceI.addGamesToUserNewCollection(userCollection);
+        gameService.addGamesToUserNewCollection(userCollection);
     }
 
     @PostMapping("/addAnNewGameForAnExistingUser")
     @ResponseStatus(HttpStatus.CREATED)
     public void addAnNewGameForAnExistingUser(@RequestBody List<GameDocumentDTO> newGame,
                                               @RequestParam String user){
-        gameServiceI.addAnNewGameFotAnExistingUser(newGame, user);
+        gameService.addAnNewGameFotAnExistingUser(newGame, user);
     }
 
     @PutMapping("/updateGameInUserCollection")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateGame(@RequestBody List<UpdateParameters> updateParameters,
                            @RequestParam String user){
-        gameServiceI.updateGame(user, updateParameters);
+        gameService.updateGame(user, updateParameters);
     }
 
     @GetMapping("/getAllGamesIsPreOrder")
     @ResponseStatus(HttpStatus.OK)
     public GameResponseDTO getAllGamesIsPreOrder(@RequestParam Boolean isPreOrder,
                                                  @RequestParam String user){
-        return gameServiceI.getAllGamesIsPreOrder(isPreOrder, user);
+        return gameService.getAllGamesIsPreOrder(isPreOrder, user);
     }
 
     @GetMapping("/getAllGamesIsCompleted")
     @ResponseStatus(HttpStatus.OK)
     public GameResponseDTO getAllGamesIsCompleted(@RequestParam Boolean isCompleted,
                                                   @RequestParam String user){
-        return gameServiceI.getAllGamesIsCompleted(isCompleted, user);
+        return gameService.getAllGamesIsCompleted(isCompleted, user);
     }
 
     @GetMapping("/getAllGamesByGenre")
     @ResponseStatus(HttpStatus.OK)
     public GameResponseDTO getAllGamesByGenre(@RequestParam Genre genre,
                                               @RequestParam String user){
-        return gameServiceI.getAllGamesByGenre(genre, user);
+        return gameService.getAllGamesByGenre(genre, user);
     }
 
     @DeleteMapping("/deleteGameFromUser")
@@ -91,12 +97,12 @@ public class GameController {
     @GetMapping("/getAllGamesNotReleased")
     @ResponseStatus(HttpStatus.OK)
     public GameResponseDTO getAllGamesNotReleased(@RequestParam String user){
-        return gameServiceI.getAllGamesNotReleased(user);
+        return gameService.getAllGamesNotReleased(user);
     }
 
     @GetMapping("/getAllGamesUserOwns")
     @ResponseStatus(HttpStatus.OK)
     public List<GameResponseDTO> getAllGamesOwnedByUser(@RequestParam String user){
-        return gameServiceI.getAllGamesOwned(true, user);
+        return gameService.getAllGamesOwned(true, user);
     }
 }

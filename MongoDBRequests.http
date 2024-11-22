@@ -19,15 +19,63 @@ content-type: application/json
 
 [
   {
-    "name": "LEGO Horizon Adventures",
-    "platform": "PS5Pro",
+    "name": "Final Fantasy: Pixel Remasters",
+    "platform": "PS4",
     "rating": 5.0,
-    "releaseDate": "2024-11-14 00:00:00",
+    "releaseDate": "2023-04-19 00:00:00",
     "isPreOrder": false,
     "isInterested": true,
-    "genre": "A_RPG",
+    "genre": "J_RPG",
     "isCompleted": false,
-    "isOwned": false,
+    "isOwned": true,
+    "dlcs": null
+  },
+  {
+    "name": "Final Fantasy VII: Crisis Core Reunion",
+    "platform": "PS5",
+    "rating": 5.0,
+    "releaseDate": "2022-12-13 00:00:00",
+    "isPreOrder": false,
+    "isInterested": true,
+    "genre": "J_RPG",
+    "isCompleted": false,
+    "isOwned": true,
+    "dlcs": null
+  },
+  {
+    "name": "Final Fantasy X: HD Remaster",
+    "platform": "PSVITA",
+    "rating": 5.0,
+    "releaseDate": "2013-12-26 00:00:00",
+    "isPreOrder": false,
+    "isInterested": true,
+    "genre": "J_RPG",
+    "isCompleted": false,
+    "isOwned": true,
+    "dlcs": null
+  },
+  {
+    "name": "Final Fantasy XV",
+    "platform": "PS4",
+    "rating": 5.0,
+    "releaseDate": "2016-11-29 00:00:00",
+    "isPreOrder": false,
+    "isInterested": true,
+    "genre": "J_RPG",
+    "isCompleted": false,
+    "isOwned": true,
+    "dlcs": null
+  },
+  {
+    "name": "Final Fantasy XIV",
+    "platform": "PS5",
+    "rating": 5.0,
+    "releaseDate": "2013-08-27 00:00:00",
+    "isPreOrder": false,
+    "isInterested": true,
+    "genre": "MMORPG",
+    "isCompleted": false,
+    "isOwned": true,
     "dlcs": null
   }
 ]
@@ -104,3 +152,6 @@ content-type: application/json
 
 ### Get Game DLC for game
 GET http://localhost:9006/api/v1/docs/dlccontroller/getDLCForGame?user=davidk&game=Final Fantasy 16
+
+### Get An specific game
+GET http://localhost:9006/api/v1/docs/gamecontroller/getAnGame?user=davidk&gameString=Final
