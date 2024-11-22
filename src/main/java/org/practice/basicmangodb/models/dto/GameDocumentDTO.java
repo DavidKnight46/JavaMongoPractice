@@ -1,15 +1,16 @@
-package org.practice.basicmangodb.models.game;
+package org.practice.basicmangodb.models.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.practice.basicmangodb.enums.Genre;
 import org.practice.basicmangodb.enums.Platforms;
+import org.practice.basicmangodb.models.game.dlc.DLC;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Data
-public class Game {
+public class GameDocumentDTO {
 
     private String name;
     private Platforms platform;
@@ -22,9 +23,9 @@ public class Game {
     private Boolean isCompleted;
     private Boolean isOwned;
     private ArrayList<DLC> dlcs;
-    public Game(){}
+    public GameDocumentDTO(){}
 
-    public Game(String name, Platforms platform, Double rating, LocalDateTime releaseDate, Boolean isPreOrder, Boolean isInterested, Genre genre, Boolean isCompleted, Boolean isOwned, ArrayList<DLC> dlcs){
+    public GameDocumentDTO(String name, Platforms platform, Double rating, LocalDateTime releaseDate, Boolean isPreOrder, Boolean isInterested, Genre genre, Boolean isCompleted, Boolean isOwned, ArrayList<DLC> dlcs){
         this.name = name;
         this.platform = platform;
         this.rating = rating;

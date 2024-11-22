@@ -1,4 +1,4 @@
-package org.practice.basicmangodb.service.user;
+package org.practice.basicmangodb.service.game;
 
 import lombok.val;
 import org.practice.basicmangodb.comparators.*;
@@ -8,9 +8,9 @@ import org.practice.basicmangodb.exceptions.NoGamesFoundException;
 import org.practice.basicmangodb.exceptions.NoUserFoundException;
 import org.practice.basicmangodb.exceptions.UnableToAddGameException;
 import org.practice.basicmangodb.models.UserCollection;
-import org.practice.basicmangodb.models.game.Game;
+import org.practice.basicmangodb.models.dto.GameDocumentDTO;
 import org.practice.basicmangodb.models.game.GameDocument;
-import org.practice.basicmangodb.models.game.GameResponse;
+import org.practice.basicmangodb.models.dto.GameResponseDTO;
 import org.practice.basicmangodb.models.game.UpdateParameters;
 import org.practice.basicmangodb.models.user.User;
 import org.practice.basicmangodb.repository.GameCollectionRepositoryI;
@@ -35,15 +35,13 @@ public class GameServiceImpl implements GameServiceI {
     }
 
     @Override
-    public List<GameResponse> getAllGamesByUser(String user, String orderBy, String sortedBy){
+    public List<GameResponseDTO> getAllGamesByUser(String user, String orderBy, String sortedBy){
         if(gameCollectionRepositoryI.findGameDocumentByUserUsername(user).isPresent()) {
-            List<GameResponse> list = gameCollectionRepositoryI.findGameDocumentByUserUsername(user)
+            return gameCollectionRepositoryI.findGameDocumentByUserUsername(user)
                     .get()
                     .stream()
                     .map(e -> this.mapToGameResponse(e, orderBy, sortedBy))
                     .toList();
-
-            return list;
 
         } else {
             throw new NoGamesFoundException("No games found matching criteria.");
@@ -51,13 +49,13 @@ public class GameServiceImpl implements GameServiceI {
     }
 
     @Override
-    public List<GameResponse> getUserGamesByPlatform(String user, Platforms platform) {
+    public List<GameResponseDTO> getUserGamesByPlatform(String user, Platforms platform) {
         isUsernamePresent(user);
 
-        ArrayList<Game> gameList = new ArrayList<>();
+        ArrayList<GameDocumentDTO> gameList = new ArrayList<>();
 
         if(findGamesByTheUser(user).isPresent()){
-            List<Game> list = findGamesByTheUser(user)
+            List<GameDocumentDTO> list = findGamesByTheUser(user)
                     .get()
                     .get(0)
                     .getGame()
@@ -73,19 +71,19 @@ public class GameServiceImpl implements GameServiceI {
 
     @Override
     public void addGamesToUserNewCollection(UserCollection userCollection) {
-        GameDocument gameDocument = new GameDocument((ArrayList<Game>) userCollection.newGame(), userCollection.user());
+        GameDocument gameDocument = new GameDocument((ArrayList<GameDocumentDTO>) userCollection.newGame(), userCollection.user());
 
         gameCollectionRepositoryI.save(gameDocument);
     }
 
     @Override
-    public void addAnNewGameFotAnExistingUser(List<Game> newGame, String user){
+    public void addAnNewGameFotAnExistingUser(List<GameDocumentDTO> newGame, String user){
         isUsernamePresent(user);
 
         if(gameCollectionRepositoryI.findAllByUser_Alias(user).isPresent()){
             GameDocument gameDocument = gameCollectionRepositoryI.findAllByUser_Alias(user).get().get(0);
 
-            for(Game game : newGame){
+            for(GameDocumentDTO game : newGame){
                 if(gameDocument.getGame().contains(game)){
                     throw new UnableToAddGameException(String.format("%s already added on platform %s", game.getName(), game.getPlatform()));
                 } else {
@@ -106,41 +104,41 @@ public class GameServiceImpl implements GameServiceI {
     }
 
     @Override
-    public GameResponse getAllGamesIsPreOrder(Boolean isPreOrder, String user) {
+    public GameResponseDTO getAllGamesIsPreOrder(Boolean isPreOrder, String user) {
         if(gameCollectionRepositoryI.findAllByUser_Alias(user).isPresent()){
-            List<Game> list = getGameStream(user)
-                    .filter(Game::getIsPreOrder)
+            List<GameDocumentDTO> list = getGameStream(user)
+                    .filter(GameDocumentDTO::getIsPreOrder)
                     .toList();
 
-            return new GameResponse(user, list, false);
+            return new GameResponseDTO(user, list, false);
         } else {
             throw new NoGamesFoundException("There are no games on pre order.");
         }
     }
 
     @Override
-    public GameResponse getAllGamesIsCompleted(Boolean isCompleted, String user) {
+    public GameResponseDTO getAllGamesIsCompleted(Boolean isCompleted, String user) {
         if(findGamesByTheUser(user).isPresent()){
-            List<Game> list = getGameStream(user)
+            List<GameDocumentDTO> list = getGameStream(user)
                     .filter(e -> e.getIsCompleted() == isCompleted)
                     .toList();
 
-            return new GameResponse(user, list, false);
+            return new GameResponseDTO(user, list, false);
         } else {
             throw new NoGamesFoundException("There are no games are completed");
         }
     }
 
     @Override
-    public GameResponse getAllGamesByGenre(Genre genre, String user) {
+    public GameResponseDTO getAllGamesByGenre(Genre genre, String user) {
         if(gameCollectionRepositoryI.findGameDocumentByUserUsername(user)
                 .isPresent()){
 
-            List<Game> listOfGamesByGenre = getGameStream(user)
+            List<GameDocumentDTO> listOfGamesByGenre = getGameStream(user)
                     .filter(e -> e.getGenre() == genre)
                     .toList();
 
-            return new GameResponse(user, listOfGamesByGenre, false);
+            return new GameResponseDTO(user, listOfGamesByGenre, false);
         } else {
             throw new NoGamesFoundException("There are no games in selected genre.");
         }
@@ -150,26 +148,26 @@ public class GameServiceImpl implements GameServiceI {
     public void deleteGameFromUser(String user, String gameName){}
 
     @Override
-    public GameResponse getAllGamesNotReleased(String user){
+    public GameResponseDTO getAllGamesNotReleased(String user){
         if(gameCollectionRepositoryI.findGameDocumentByUserUsername(user)
                 .isPresent()){
 
-            List<Game> listOfGamesByGenre = getGameStream(user)
+            List<GameDocumentDTO> listOfGamesByGenre = getGameStream(user)
                     .filter(e -> !e.getIsOwned())
                     .toList();
 
-            return new GameResponse(user, listOfGamesByGenre, false);
+            return new GameResponseDTO(user, listOfGamesByGenre, false);
         } else {
             throw new NoGamesFoundException("There are no games in selected genre.");
         }
     }
 
     @Override
-    public List<GameResponse> getAllGamesOwned(boolean isOwned, String user){
-        ArrayList<Game> gameList = new ArrayList<>();
+    public List<GameResponseDTO> getAllGamesOwned(boolean isOwned, String user){
+        ArrayList<GameDocumentDTO> gameList = new ArrayList<>();
 
         if(findGamesByTheUser(user).isPresent()){
-            List<Game> list = getGameStream(user)
+            List<GameDocumentDTO> list = getGameStream(user)
                     .sorted(new ReleaseDateComparatorAsc())
                     .filter(e -> e.getIsOwned() == isOwned)
                     .toList();
@@ -180,7 +178,7 @@ public class GameServiceImpl implements GameServiceI {
         }
     }
 
-    private Stream<Game> getGameStream(String user) {
+    private Stream<GameDocumentDTO> getGameStream(String user) {
         if(gameCollectionRepositoryI.findGameDocumentByUserUsername(user).isPresent()) {
             return gameCollectionRepositoryI
                     .findGameDocumentByUserUsername(user)
@@ -195,9 +193,9 @@ public class GameServiceImpl implements GameServiceI {
         }
     }
 
-    private GameResponse mapToGameResponse(GameDocument document, String orderBy, String sortedBy){
+    private GameResponseDTO mapToGameResponse(GameDocument document, String orderBy, String sortedBy){
         if(orderBy.contentEquals("DESC") && sortedBy.contentEquals("RATING")) {
-            List<Game> list = document.getGame()
+            List<GameDocumentDTO> list = document.getGame()
                     .stream()
                     .sorted(new RatingComparatorDsc())
                     .sorted(new ReleaseDateComparatorAsc())
@@ -239,7 +237,7 @@ public class GameServiceImpl implements GameServiceI {
         }
     }
 
-    private GameResponse getGameResponse(String user, List<Game> list, ArrayList<Game> gameList) {
+    private GameResponseDTO getGameResponse(String user, List<GameDocumentDTO> list, ArrayList<GameDocumentDTO> gameList) {
         list.forEach(e ->this.convertToGame(gameList, e));
 
         User activeUser = gameCollectionRepositoryI
@@ -250,10 +248,10 @@ public class GameServiceImpl implements GameServiceI {
                 .get()
                 .getUser();
 
-        return new GameResponse(user, gameList, activeUser.isAdmin());
+        return new GameResponseDTO(user, gameList, activeUser.isAdmin());
     }
 
-    private void convertToGame(ArrayList<Game> gameList, Game game){
+    private void convertToGame(ArrayList<GameDocumentDTO> gameList, GameDocumentDTO game){
         gameList.add(game);
     }
 
@@ -273,7 +271,7 @@ public class GameServiceImpl implements GameServiceI {
         if (gameCollectionRepositoryI.findById(updateParameters.id()).isPresent()) {
             GameDocument gameDocument = gameCollectionRepositoryI.findById(updateParameters.id()).get();
 
-            Game game = gameDocument.getGame().stream()
+            GameDocumentDTO game = gameDocument.getGame().stream()
                     .filter(e -> e.getName().contentEquals(updateParameters.gameToUpdate()))
                     .findFirst()
                     .orElseThrow();

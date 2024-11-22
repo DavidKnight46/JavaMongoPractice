@@ -3,11 +3,11 @@ package org.practice.basicmangodb.controller;
 import org.practice.basicmangodb.enums.Genre;
 import org.practice.basicmangodb.enums.Platforms;
 import org.practice.basicmangodb.models.UserCollection;
-import org.practice.basicmangodb.models.game.Game;
-import org.practice.basicmangodb.models.game.GameResponse;
+import org.practice.basicmangodb.models.dto.GameDocumentDTO;
+import org.practice.basicmangodb.models.dto.GameResponseDTO;
 import org.practice.basicmangodb.models.game.UpdateParameters;
-import org.practice.basicmangodb.service.user.GameServiceI;
-import org.practice.basicmangodb.service.user.GameServiceImpl;
+import org.practice.basicmangodb.service.game.GameServiceI;
+import org.practice.basicmangodb.service.game.GameServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,16 +27,16 @@ public class GameController {
     @CrossOrigin
     @GetMapping("/getAllGamesForUser")
     @ResponseStatus(HttpStatus.OK)
-    private List<GameResponse> getAllGamesByUser(@RequestParam String user,
-                                                 @RequestParam(defaultValue = "ASC") String orderBy,
-                                                 @RequestParam(defaultValue = "RATING") String sortedBy){
+    private List<GameResponseDTO> getAllGamesByUser(@RequestParam String user,
+                                                    @RequestParam(defaultValue = "ASC") String orderBy,
+                                                    @RequestParam(defaultValue = "RATING") String sortedBy){
         return gameServiceI.getAllGamesByUser(user, orderBy, sortedBy);
     }
 
     @GetMapping("/getAllGamesForUserByPlatform")
     @ResponseStatus(HttpStatus.OK)
-    public List<GameResponse> getUserGamesByPlatform(@RequestParam String user,
-                                                     @RequestParam Platforms platform){
+    public List<GameResponseDTO> getUserGamesByPlatform(@RequestParam String user,
+                                                        @RequestParam Platforms platform){
         return gameServiceI.getUserGamesByPlatform(user, platform);
     }
 
@@ -48,7 +48,7 @@ public class GameController {
 
     @PostMapping("/addAnNewGameForAnExistingUser")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addAnNewGameForAnExistingUser(@RequestBody List<Game> newGame,
+    public void addAnNewGameForAnExistingUser(@RequestBody List<GameDocumentDTO> newGame,
                                               @RequestParam String user){
         gameServiceI.addAnNewGameFotAnExistingUser(newGame, user);
     }
@@ -62,22 +62,22 @@ public class GameController {
 
     @GetMapping("/getAllGamesIsPreOrder")
     @ResponseStatus(HttpStatus.OK)
-    public GameResponse getAllGamesIsPreOrder(@RequestParam Boolean isPreOrder,
-                                                    @RequestParam String user){
+    public GameResponseDTO getAllGamesIsPreOrder(@RequestParam Boolean isPreOrder,
+                                                 @RequestParam String user){
         return gameServiceI.getAllGamesIsPreOrder(isPreOrder, user);
     }
 
     @GetMapping("/getAllGamesIsCompleted")
     @ResponseStatus(HttpStatus.OK)
-    public GameResponse getAllGamesIsCompleted(@RequestParam Boolean isCompleted,
-                                                     @RequestParam String user){
+    public GameResponseDTO getAllGamesIsCompleted(@RequestParam Boolean isCompleted,
+                                                  @RequestParam String user){
         return gameServiceI.getAllGamesIsCompleted(isCompleted, user);
     }
 
     @GetMapping("/getAllGamesByGenre")
     @ResponseStatus(HttpStatus.OK)
-    public GameResponse getAllGamesByGenre(@RequestParam Genre genre,
-                                                 @RequestParam String user){
+    public GameResponseDTO getAllGamesByGenre(@RequestParam Genre genre,
+                                              @RequestParam String user){
         return gameServiceI.getAllGamesByGenre(genre, user);
     }
 
@@ -90,13 +90,13 @@ public class GameController {
 
     @GetMapping("/getAllGamesNotReleased")
     @ResponseStatus(HttpStatus.OK)
-    public GameResponse getAllGamesNotReleased(@RequestParam String user){
+    public GameResponseDTO getAllGamesNotReleased(@RequestParam String user){
         return gameServiceI.getAllGamesNotReleased(user);
     }
 
     @GetMapping("/getAllGamesUserOwns")
     @ResponseStatus(HttpStatus.OK)
-    public List<GameResponse> getAllGamesOwnedByUser(@RequestParam String user){
+    public List<GameResponseDTO> getAllGamesOwnedByUser(@RequestParam String user){
         return gameServiceI.getAllGamesOwned(true, user);
     }
 }

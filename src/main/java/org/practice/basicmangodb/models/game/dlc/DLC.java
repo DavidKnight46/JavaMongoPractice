@@ -1,4 +1,4 @@
-package org.practice.basicmangodb.models.game;
+package org.practice.basicmangodb.models.game.dlc;
 
 import lombok.Data;
 

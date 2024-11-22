@@ -3,13 +3,12 @@ package org.practice.basicmangodb.service.dlcservice;
 import org.practice.basicmangodb.exceptions.NoDLCFoundException;
 import org.practice.basicmangodb.exceptions.NoGamesFoundException;
 import org.practice.basicmangodb.models.dto.DlcDTO;
-import org.practice.basicmangodb.models.game.DLC;
-import org.practice.basicmangodb.models.game.Game;
+import org.practice.basicmangodb.models.game.dlc.DLC;
+import org.practice.basicmangodb.models.dto.GameDocumentDTO;
 import org.practice.basicmangodb.models.game.GameDocument;
 import org.practice.basicmangodb.repository.GameCollectionRepositoryI;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -71,7 +70,7 @@ public class DLCServiceImpl implements DLCServiceI{
         return dlcList;
     }
 
-    private Optional<Game> getGame(String game, GameDocument doc) {
+    private Optional<GameDocumentDTO> getGame(String game, GameDocument doc) {
         return doc.getGame()
                 .stream()
                 .filter(e -> e.getName().contentEquals(game))
