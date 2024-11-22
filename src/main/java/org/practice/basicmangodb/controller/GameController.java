@@ -62,14 +62,14 @@ public class GameController {
 
     @GetMapping("/getAllGamesIsPreOrder")
     @ResponseStatus(HttpStatus.OK)
-    public List<GameResponse> getAllGamesIsPreOrder(@RequestParam Boolean isPreOrder,
+    public GameResponse getAllGamesIsPreOrder(@RequestParam Boolean isPreOrder,
                                                     @RequestParam String user){
         return gameServiceI.getAllGamesIsPreOrder(isPreOrder, user);
     }
 
     @GetMapping("/getAllGamesIsCompleted")
     @ResponseStatus(HttpStatus.OK)
-    public List<GameResponse> getAllGamesIsCompleted(@RequestParam Boolean isCompleted,
+    public GameResponse getAllGamesIsCompleted(@RequestParam Boolean isCompleted,
                                                      @RequestParam String user){
         return gameServiceI.getAllGamesIsCompleted(isCompleted, user);
     }
@@ -90,7 +90,7 @@ public class GameController {
 
     @GetMapping("/getAllGamesNotReleased")
     @ResponseStatus(HttpStatus.OK)
-    public List<GameResponse> getAllGamesNotReleased(@RequestParam String user){
+    public GameResponse getAllGamesNotReleased(@RequestParam String user){
         return gameServiceI.getAllGamesNotReleased(user);
     }
 

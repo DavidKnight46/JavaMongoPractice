@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 public class GameServiceImpl implements GameServiceI {
@@ -105,41 +106,26 @@ public class GameServiceImpl implements GameServiceI {
     }
 
     @Override
-    public List<GameResponse> getAllGamesIsPreOrder(Boolean isPreOrder, String user) {
-        ArrayList<Game> gameList = new ArrayList<>();
-
+    public GameResponse getAllGamesIsPreOrder(Boolean isPreOrder, String user) {
         if(gameCollectionRepositoryI.findAllByUser_Alias(user).isPresent()){
-            List<Game> list = gameCollectionRepositoryI.findAllByUser_Alias(user)
-                    .get()
-                    .get(0)
-                    .getGame()
-                    .stream()
+            List<Game> list = getGameStream(user)
                     .filter(Game::getIsPreOrder)
                     .toList();
 
-            return List.of(getGameResponse(user, list, gameList));
+            return new GameResponse(user, list, false);
         } else {
             throw new NoGamesFoundException("There are no games on pre order.");
         }
     }
 
     @Override
-    public List<GameResponse> getAllGamesIsCompleted(Boolean isCompleted, String user) {
-        ArrayList<Game> gameList = new ArrayList<>();
-
-        if(gameCollectionRepositoryI.findGameDocumentByUserUsername(user).isPresent()){
-            List<Game> list = gameCollectionRepositoryI
-                    .findGameDocumentByUserUsername(user)
-                    .get()
-                    .stream()
-                    .toList()
-                    .get(0)
-                    .getGame()
-                    .stream()
+    public GameResponse getAllGamesIsCompleted(Boolean isCompleted, String user) {
+        if(findGamesByTheUser(user).isPresent()){
+            List<Game> list = getGameStream(user)
                     .filter(e -> e.getIsCompleted() == isCompleted)
                     .toList();
 
-            return List.of(getGameResponse(user, list, gameList));
+            return new GameResponse(user, list, false);
         } else {
             throw new NoGamesFoundException("There are no games are completed");
         }
@@ -150,14 +136,7 @@ public class GameServiceImpl implements GameServiceI {
         if(gameCollectionRepositoryI.findGameDocumentByUserUsername(user)
                 .isPresent()){
 
-            List<Game> listOfGamesByGenre = gameCollectionRepositoryI
-                    .findGameDocumentByUserUsername(user)
-                    .get()
-                    .stream()
-                    .toList()
-                    .get(0)
-                    .getGame()
-                    .stream()
+            List<Game> listOfGamesByGenre = getGameStream(user)
                     .filter(e -> e.getGenre() == genre)
                     .toList();
 
@@ -171,23 +150,18 @@ public class GameServiceImpl implements GameServiceI {
     public void deleteGameFromUser(String user, String gameName){}
 
     @Override
-    public List<GameResponse> getAllGamesNotReleased(String user){
-        GameResponse gameResponse = null;
+    public GameResponse getAllGamesNotReleased(String user){
+        if(gameCollectionRepositoryI.findGameDocumentByUserUsername(user)
+                .isPresent()){
 
-        if(gameCollectionRepositoryI.findAllByUser_Alias(user).isPresent()){
-            ArrayList<Game> listOfGamesForUser = gameCollectionRepositoryI.findAllByUser_Alias(user).get().get(0).getGame();
+            List<Game> listOfGamesByGenre = getGameStream(user)
+                    .filter(e -> !e.getIsOwned())
+                    .toList();
 
-            var gamesToBeReleasedList = listOfGamesForUser
-                    .stream()
-                    .filter(e -> e.getReleaseDate().isAfter(LocalDateTime.now()))
-                    .toArray(Game[]::new);
-
-            User byUserUsername = gameCollectionRepositoryI.findByUser_Alias(user);
-
-            gameResponse = new GameResponse(user, new ArrayList<>(List.of(gamesToBeReleasedList)), byUserUsername.isAdmin());
+            return new GameResponse(user, listOfGamesByGenre, false);
+        } else {
+            throw new NoGamesFoundException("There are no games in selected genre.");
         }
-
-        return List.of(gameResponse);
     }
 
     @Override
@@ -195,11 +169,7 @@ public class GameServiceImpl implements GameServiceI {
         ArrayList<Game> gameList = new ArrayList<>();
 
         if(findGamesByTheUser(user).isPresent()){
-            List<Game> list = findGamesByTheUser(user)
-                    .get()
-                    .get(0)
-                    .getGame()
-                    .stream()
+            List<Game> list = getGameStream(user)
                     .sorted(new ReleaseDateComparatorAsc())
                     .filter(e -> e.getIsOwned() == isOwned)
                     .toList();
@@ -207,6 +177,21 @@ public class GameServiceImpl implements GameServiceI {
             return List.of(getGameResponse(user, list, gameList));
         } else {
             throw new NoGamesFoundException("There are no games completed");
+        }
+    }
+
+    private Stream<Game> getGameStream(String user) {
+        if(gameCollectionRepositoryI.findGameDocumentByUserUsername(user).isPresent()) {
+            return gameCollectionRepositoryI
+                    .findGameDocumentByUserUsername(user)
+                    .get()
+                    .stream()
+                    .toList()
+                    .get(0)
+                    .getGame()
+                    .stream();
+        } else {
+            throw new NoGamesFoundException("No Games found.");
         }
     }
 
@@ -279,7 +264,7 @@ public class GameServiceImpl implements GameServiceI {
     private void isUsernamePresent(String userName) throws NoUserFoundException {
         Optional<GameDocument> b = gameCollectionRepositoryI.existsByUser_Alias(userName);
 
-        if(!b.isPresent()){
+        if(b.isEmpty()){
             throw new NoUserFoundException(String.format("%s is not registered", userName));
         }
     }
