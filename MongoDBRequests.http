@@ -19,16 +19,16 @@ content-type: application/json
 
 [
   {
-    "name": "Tales of Arise",
-    "platform": "PS5",
+    "name": "LEGO Horizon Adventures",
+    "platform": "PS5Pro",
     "rating": 5.0,
-    "releaseDate": "2021-09-10 00:00:00",
+    "releaseDate": "2024-11-14 00:00:00",
     "isPreOrder": false,
     "isInterested": true,
-    "genre": "J_RPG",
-    "isCompleted": true,
-    "isOwned": true,
-    "dlcs": [{"dlcName":"Beyond the Dawn", "releaseDate": "2023-09-11", "rating": 4.5}]
+    "genre": "A_RPG",
+    "isCompleted": false,
+    "isOwned": false,
+    "dlcs": null
   }
 ]
 
@@ -76,19 +76,16 @@ content-type: application/json
 ]
 
 ### Get all games that were pre-orders
-GET http://localhost:9006/api/v1/docs/gamecontroller/getAllGamesIsPreOrder?isPreOrder=true&user=davidknight
+GET http://localhost:9006/api/v1/docs/gamecontroller/getAllGamesIsPreOrder?isPreOrder=true&user=davidk
 
 ### Get all games that are completed
-GET http://localhost:9006/api/v1/docs/gamecontroller/getAllGamesIsCompleted?isCompleted=true&user=davidknight
+GET http://localhost:9006/api/v1/docs/gamecontroller/getAllGamesIsCompleted?isCompleted=true&user=davidk
 
 ### Get all games by genre
 GET http://localhost:9006/api/v1/docs/gamecontroller/getAllGamesByGenre?genre=J_RPG&user=davidk
 
 ### Get all games not released
 GET http://localhost:9006/api/v1/docs/gamecontroller/getAllGamesNotReleased?user=davidk
-
-### Get all games owned
-GET http://localhost:9006/api/v1/docs/gamecontroller/getAllGamesUserOwns?user=davidk
 
 ### Remove user
 DELETE http://localhost:9006/api/v1/docs/admincontroller/deleteUser?user=yangzhou

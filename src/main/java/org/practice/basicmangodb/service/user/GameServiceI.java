@@ -21,15 +21,15 @@ public interface GameServiceI {
 
     void updateGame(String user, List<UpdateParameters> game);
 
-    List<GameResponse> getAllGamesIsPreOrder(Boolean isPreOrder, String user);
+    GameResponse getAllGamesIsPreOrder(Boolean isPreOrder, String user);
 
-    List<GameResponse> getAllGamesIsCompleted(Boolean isCompleted, String user);
+    GameResponse getAllGamesIsCompleted(Boolean isCompleted, String user);
 
     GameResponse getAllGamesByGenre(Genre genre, String user);
 
     void deleteGameFromUser(String user, String gameName);
 
-    List<GameResponse> getAllGamesNotReleased(String user);
+    GameResponse getAllGamesNotReleased(String user);
 
     List<GameResponse> getAllGamesOwned(boolean isOwned, String user);
 }
