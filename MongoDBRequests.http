@@ -102,5 +102,5 @@ content-type: application/json
   "rating": 5.0
 }
 
-### Get Game DLC
+### Get Game DLC for game
 GET http://localhost:9006/api/v1/docs/dlccontroller/getDLCForGame?user=davidk&game=Final Fantasy 16

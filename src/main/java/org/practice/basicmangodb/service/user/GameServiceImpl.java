@@ -264,19 +264,9 @@ public class GameServiceImpl implements GameServiceI {
     private void isUsernamePresent(String userName) throws NoUserFoundException {
         Optional<GameDocument> b = gameCollectionRepositoryI.existsByUser_Alias(userName);
 
-        if(!b.isPresent()){
+        if(b.isEmpty()){
             throw new NoUserFoundException(String.format("%s is not registered", userName));
         }
-    }
-
-    private void isSameGameOnSamePlatform(ArrayList<Game> list, Game newGame, String user){
-        if(list.stream().anyMatch(e -> e.getName().contentEquals(newGame.getName()) &&
-                e.getPlatform().toString().contentEquals(newGame.getPlatform().name()))){
-           throw new UnableToAddGameException(String.format("%s on %s already found for user %s.",
-                   newGame.getName(),
-                   newGame.getPlatform(),
-                   user));
-        };
     }
 
     private void processUpdateParameters(UpdateParameters updateParameters){
